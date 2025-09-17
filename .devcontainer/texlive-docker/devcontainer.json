@@ -4,7 +4,7 @@
   "name": "TeX Live - Docker",
 
   // Use an existing image for the container instead of building a new one from scratch.
-  "image": "ghcr.io/henrikcorrea/am-tp:latest",
+  "image": "ghcr.io/henrikcorrea/am-tp:main",
 
   // // Create devcontainer.json from Dockerfile. More info: https://containers.dev/guide/dockerfile.
   // "build": {
