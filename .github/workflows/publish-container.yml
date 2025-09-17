@@ -23,7 +23,7 @@ jobs:
         uses: docker/metadata-action@v5.8.0
         with:
           images: | 
-            ghcr.io/${{ github.repository }}
+            ${{ github.repository }}
           flavor: |
             latest=auto
           tags: |
