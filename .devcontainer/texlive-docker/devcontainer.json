@@ -25,7 +25,13 @@
   // Configure tool-specific properties.
   "customizations": {
     "vscode": {
-      "extensions": ["James-Yu.latex-workshop"]
+      "extensions": [
+        "James-Yu.latex-workshop",
+        "ms-toolsai.jupyter",
+        "ms-toolsai.datawrangler",
+        "PKief.material-icon-theme",
+        "donjayamanne.python-extension-pack"
+      ]
     }
   }
 
