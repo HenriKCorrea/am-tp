@@ -9,11 +9,13 @@ $ENV{'BSTINPUTS'} = '../texmf/bibtex/bst//:' . ($ENV{'BSTINPUTS'} || '');
 
 # --- Build Configuration ---
 $aux_dir = 'build';        # Path where temporary compiler files are generated
-$out_dir = 'output';       # Path where desired artifacts are generated
+# $out_dir = 'output';       # Path where desired artifacts are generated. Defaults to '' (same as source)
 $pdf_mode = 1;             # Generate PDF (1: PDF, 0: DVI, 2: PS)
 
 # --- Output configuration ---
-# syntex=1: Enable synchronization with editors (e.g., VSCode <==> PDF viewer)
+# synctex=1: Enable synchronization with editors (e.g., VSCode <==> PDF viewer)
+# file-line-error: Show errors with line numbers
+# nonstopmode: Continue compiling even if errors are encountered
 $pdflatex = 'pdflatex -synctex=1 -file-line-error -interaction=nonstopmode %O %S';
 
 # --- Clean extensions ---
