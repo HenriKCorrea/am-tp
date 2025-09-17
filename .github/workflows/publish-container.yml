@@ -10,6 +10,10 @@ on:
       - '.devcontainer/Dockerfile'
       - '.github/workflows/publish-container.yml'
 
+# Grants permissions to the GITHUB_TOKEN to be able to publish to GitHub Container Registry
+permissions:
+  packages: write
+
 jobs:
   build-and-push:
     runs-on: ubuntu-latest
@@ -23,7 +27,7 @@ jobs:
         uses: docker/metadata-action@v5.8.0
         with:
           images: | 
-            ${{ github.repository }}
+            ghcr.io/${{ github.repository }}
           flavor: |
             latest=auto
           tags: |
