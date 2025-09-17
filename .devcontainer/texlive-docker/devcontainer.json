@@ -3,11 +3,14 @@
 {
   "name": "TeX Live - Docker",
 
-  // Create devcontainer.json from Dockerfile. More info: https://containers.dev/guide/dockerfile.
-  "build": {
-    // Path is relative to the devcontainer.json file.
-    "dockerfile": "../Dockerfile"
-  },
+  // Use an existing image for the container instead of building a new one from scratch.
+  "image": "ghcr.io/henrikcorrea/am-tp:latest",
+
+  // // Create devcontainer.json from Dockerfile. More info: https://containers.dev/guide/dockerfile.
+  // "build": {
+  //   // Path is relative to the devcontainer.json file.
+  //   "dockerfile": "../Dockerfile"
+  // },
 
   // Features to add to the dev container. More info: https://containers.dev/features.
   // "features": {
