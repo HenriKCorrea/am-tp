@@ -444,4 +444,6 @@ TSWLatexianTemp*
 # Uncomment the next line to have this generated file ignored.
 #*Notes.bib
 
+# Ignore all pdf files, except those in the texmf directory and its subdirectories
 *.pdf
+!texmf/**/*.pdf
