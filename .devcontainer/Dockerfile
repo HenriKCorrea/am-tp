@@ -2,8 +2,14 @@ FROM registry.gitlab.com/islandoftex/images/texlive:latest
 
 # Install system dependencies
 RUN apt-get update && \
-    apt-get install -y --no-install-recommends git ssh gnupg2 sudo wget && \
-    apt-get clean && \
+    apt-get install -y --no-install-recommends \
+        gnupg2 \
+        git \
+        git-lfs \
+        ssh \
+        sudo \
+        wget \
+    && apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
 # Create /etc/sudoers.d/001-sudo-group to enable passwordless sudoers group
