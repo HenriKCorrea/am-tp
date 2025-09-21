@@ -31,7 +31,14 @@
         "ms-toolsai.datawrangler",
         "PKief.material-icon-theme",
         "donjayamanne.python-extension-pack"
-      ]
+      ],
+      "settings": {
+        "workbench.colorTheme": "Default Dark Modern",
+        "workbench.iconTheme": "material-icon-theme",
+        "workbench.editorAssociations": {
+          "*.pdf": "latex-workshop-pdf-hook"
+        }
+      }
     }
   }
 
