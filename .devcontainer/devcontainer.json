@@ -37,7 +37,8 @@
         "workbench.iconTheme": "material-icon-theme",
         "workbench.editorAssociations": {
           "*.pdf": "latex-workshop-pdf-hook"
-        }
+        },
+        "latex-workshop.view.pdf.viewer": "tab"
       }
     }
   }
