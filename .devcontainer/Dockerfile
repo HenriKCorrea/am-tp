@@ -28,13 +28,24 @@ RUN mkdir -p ~/miniconda3 && \
     bash ~/miniconda3/miniconda.sh -b -u -p ~/miniconda3 && \
     rm ~/miniconda3/miniconda.sh
 
-# Create am-tp environment with conda
+# Copy environment.yml to a temp location to create environment.
+COPY environment.yml /tmp/conda-tmp/
+
+# Extract environment name from environment.yml
+RUN ENV_NAME=$(awk '/^name:/ {print $2}' /tmp/conda-tmp/environment.yml) && \
+    echo "Environment name is $ENV_NAME"
+
+# Create conda environment
 RUN ~/miniconda3/bin/conda tos accept --override-channels --channel https://repo.anaconda.com/pkgs/main && \
     ~/miniconda3/bin/conda tos accept --override-channels --channel https://repo.anaconda.com/pkgs/r && \
-    ~/miniconda3/bin/conda create -y -n am-tp -c conda-forge -c defaults python=3.13 pip ipykernel && \
-    ~/miniconda3/bin/conda clean -afy
-ENV PATH="/home/texlive/miniconda3/envs/am-tp/bin:/home/texlive/miniconda3/bin:$PATH"
+    umask 0002 && \
+    ~/miniconda3/bin/conda env create -y -f /tmp/conda-tmp/environment.yml && \
+    ~/miniconda3/bin/conda clean -afy && \
+    rm -rf /tmp/conda-tmp
 
-# Activate am-tp environment by default
+# Update PATH environment variable
+ENV PATH="/home/texlive/miniconda3/envs/$ENV_NAME/bin:/home/texlive/miniconda3/bin:$PATH"
+
+# Activate conda environment by default
 RUN echo "source ~/miniconda3/etc/profile.d/conda.sh" >> ~/.bashrc && \
-    echo "conda activate am-tp" >> ~/.bashrc
+    echo "conda activate $ENV_NAME" >> ~/.bashrc

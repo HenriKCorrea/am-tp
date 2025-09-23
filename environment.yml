@@ -1,0 +1,7 @@
+name: am-tp
+channels:
+  - defaults
+dependencies:
+  - python=3.13.7
+  - pip=25.2
+  - ipykernel=6.30.1
