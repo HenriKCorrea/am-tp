@@ -1,0 +1,283 @@
+\documentclass{beamer}
+
+\usepackage[T1]{fontenc}
+\usepackage[brazil]{babel}
+\usepackage[utf8]{inputenc}
+
+% Presentation strategy:
+% Show previous presentation persona pains - OK
+% Present research questions - OK
+% Show small research keywords used
+% Describe lack of AI-assisted DT development
+% Highlight potential benefits of AI integration (e.g.: reduce costs, democratize access, etc)
+% Present abstract
+% Present research approach (MCP-based AI tools)
+% - Explain why MCP
+% - Explain how MCP can be used to create AI tools for DT development
+% -- Explain MCP architecture
+% -- Explain how MCP can be used to create AI agents and workflows
+% - Present example tools to be developed
+% -- CRD generator from ontology
+% -- Tool configuration automation
+% -- Cross-platform integration
+
+
+% Choose the Inf theme
+\usetheme{Inf}
+
+% Define the title with \title[short title]{long title}
+% Short title is optional
+\title[Research study plan]
+      {Research study plan}
+
+% Optional subtitle
+\subtitle{Research study plan for AI-assisted Digital Twin development}
+
+\date{August 2025}
+
+% Author information
+\author{Henrique Krausburg Correa}
+\institute{Institute of Informatics --- UFRGS}
+
+\begin{document}
+
+% Command to create title page
+\InfTitlePage
+
+\begin{frame}
+  \frametitle{Agenda}
+  \tableofcontents
+\end{frame}
+
+\section{Research question prospect}
+
+\begin{frame}[plain]
+ \sectionpage
+\end{frame}
+
+\frame{
+    \frametitle{Case study}
+
+    This research uses KTWIN \cite{Wermann_Wickboldt_2025} — a serverless Kubernetes-based Digital Twin platform — as a representative case study.
+}
+
+\frame{
+    \frametitle{Roles}
+
+    KTWIN workflow is based on three primary personas:
+
+    \begin{itemize}
+        \item DT Domain Expert
+        \begin{itemize}
+            \item Defines the Digital Twin model and its requirements.
+            \item Responsible for the strategic direction and governance of the DT ecosystem.
+            \item Verifies implementation.
+        \end{itemize}
+        \item DT Developer
+        \begin{itemize}
+            \item Implements the Digital Twin model using the KTWIN platform.
+        \end{itemize}
+        \item DT Operator
+        \begin{itemize}
+            \item Manages the deployment and operation of the Digital Twin in production environments.
+            \item Creates CRD (Custom Resource Definition) files to model DT use case.
+            \item Monitors system behavior through KTWIN observability solution (Grafana).
+        \end{itemize}
+    \end{itemize}
+}
+
+\frame{
+    \frametitle{Insights}
+
+    The following insights were gathered based on persona's tasks described in \cite{Wermann_Wickboldt_2025}:
+
+    \begin{itemize}
+        \item DT Domain expert is the most overloaded persona
+        \begin{itemize}
+            \item Responsible for both strategic modeling tasks and operational configuration duties.
+            \item Faces challenges in managing the complexity of the Digital Twin ecosystem.
+        \end{itemize}
+        \item DT Developer is the “weakest link”
+        \begin{itemize}
+            \item Has few responsibilities compared to other personas.
+        \end{itemize}
+        \item DT Operator is often underestimated
+        \begin{itemize}
+            \item Could absorb DT domain expert / developer duties if empowered with an AI assistant.
+        \end{itemize}
+    \end{itemize}
+}
+
+\frame{
+    \frametitle{Research questions}
+
+    \begin{itemize}
+        \item \textbf{RQ1:} How has artificial intelligence been used in Digital Twin development processes so far, and what gaps exist in current approaches?
+        \item \textbf{RQ2:} How can artificial intelligence improve Digital Twin modeling, development, deployment, and operability through automated assistance and knowledge augmentation?
+        \item \textbf{RQ3:} Can artificial intelligence contribute to solving interoperability issues in Digital Twin development through standardized integration frameworks and automated tool orchestration?
+        \end{itemize}
+}
+
+\section{Literature review}
+
+\begin{frame}[plain]
+ \sectionpage
+\end{frame}
+
+
+\frame{
+    \frametitle{AI in Digital Twin development}
+
+    To address \textbf{RQ1}, a preliminary literature review was conducted using Google Scholar with the following keywords:
+    \begin{itemize}
+        \item AI-Powered Digital Twin
+        \item Digital Twin enabling technologies
+        \item AI Digital Twin development
+    \end{itemize}
+}
+
+\frame{
+    \frametitle{Key findings}
+
+    The top 3 relevant papers (Google Scholar rank) were analyzed. Key findings include:
+    \begin{itemize}
+        \item Enabling technologies papers highlight the high complexity of Digital Twin development due to heterogeneous technologies and the vast number of required tools.
+        \begin{itemize}
+            \item \cite{Fuller_Fan_Day_Barlow_2020}, \cite{Hu_Zhang_Deng_Liu_Tan_2021}, \cite{Qi_Tao_Hu_Anwer_Liu_Wei_Wang_Nee_2021}.
+        \end{itemize}
+        \item Most AI applications are focused on enhancing production environments as part of the final Digital Twin solution.
+         \begin{itemize}
+            \item \cite{Alnaser_Maxi_Elmousalami_2024}, \cite{Sarp_Kuzlu_Jovanovic_Polat_Guler_2024}, \cite{Avanzato_Beritelli_Lombardo_Ricci_2024}
+        \end{itemize}
+        \item There is a lack of AI-powered tools or copilots designed to assist developers during the Digital Twin development process itself.
+    \end{itemize}
+}
+
+\section{Abstract draft}
+
+\begin{frame}[plain]
+ \sectionpage
+\end{frame}
+
+\frame{
+    \frametitle{Context}
+    Digital Twins have emerged as transformative technology for creating virtual replicas of physical systems, enabling real-time monitoring, simulation, and optimization across various industries.
+
+    \begin{block}{}
+        However, their development remains complex and resource-intensive, requiring significant expertise across multiple technological domains and creating substantial barriers to adoption, particularly for small and medium-sized enterprises.
+    \end{block}
+    
+    Although recent advances in Artificial Intelligence, particularly Large Language Models (LLMs) and AI-assisted software development tools, the application of AI to Digital Twin development processes remains largely unexplored.
+}
+
+\frame{
+    \frametitle{Proposal}
+    This research aims to develop generalizable AI-assisted methodologies to enhance productivity throughout the Digital Twin development process, addressing gaps in current development methodologies. 
+
+    \begin{block}{}
+    The proposed approach leverages the Model Context Protocol (MCP) specification to create specialized AI tools and connectors that automate Digital Twin development tasks, facilitate cross-platform integration, and bridge knowledge gaps between heterogeneous toolchains.
+    \end{block}
+
+    KTWIN serves as a practical testbed for implementing and evaluating these AI tools, enabling demonstration of their effectiveness in automating key development tasks, improving workflow efficiency, and supporting interoperability within a real-world Digital Twin platform.
+}
+
+\frame{
+    \frametitle{Cointributions}
+    Expected contributions include:
+    \begin{itemize}
+        \item A comprehensive analysis of current AI applications in Digital Twin development.
+        \item A novel MCP-based framework for AI-assisted development processes.
+        \item Practical tools demonstrating measurable productivity improvements.
+        % \item Validation through comparative development studies, tool integration metrics, and case study analysis using smart city scenarios.
+        \item Validation ?????
+    \end{itemize}
+}
+
+\section{Enabling technologies}
+
+\begin{frame}[plain]
+ \sectionpage
+\end{frame}
+
+\frame{
+    \frametitle{Model Context Protocol (MCP)}
+
+    MCP is an open specification for context-aware model integration and orchestration in Digital Twin ecosystems.
+
+    \begin{itemize}
+        \item Defines standardized interfaces for exchanging model context, metadata, and operational parameters.
+        \item Enables interoperability between heterogeneous tools and platforms.
+        \item Facilitates automated workflows and AI agent integration.
+        \item Serves as the foundation for building AI-assisted connectors and development tools.
+    \end{itemize}
+}
+
+\frame{
+    \frametitle{GitHub Copilot}
+
+    GitHub Copilot is an AI-powered coding assistant developed by GitHub and OpenAI.
+
+    \begin{itemize}
+        \item Provides real-time code suggestions and autocompletions in popular IDEs.
+        \item Trained on a large corpus of public code, enabling context-aware recommendations.
+        \item Accelerates software development and reduces manual coding effort.
+        \item Inspires the concept of AI copilots for Digital Twin development tasks.
+    \end{itemize}
+}
+
+\frame{
+    \frametitle{KubeFlow}
+
+    KubeFlow is an open-source platform for deploying, managing, and scaling machine learning workflows on Kubernetes.
+
+    \begin{itemize}
+        \item Provides a suite of tools for end-to-end ML lifecycle management, including training, serving, and monitoring.
+        \item Integrates seamlessly with Kubernetes, enabling scalable and reproducible ML pipelines.
+        \item Supports automation and orchestration of complex workflows, making it suitable for Digital Twin scenarios.
+        \item Offers extensibility for integrating AI agents and custom connectors in Digital Twin development.
+    \end{itemize}
+}
+
+\frame{
+    \frametitle{LangChain}
+
+    LangChain is an open-source framework for developing applications powered by Large Language Models (LLMs).
+
+    \begin{itemize}
+        \item Enables chaining of LLMs with external tools, APIs, and data sources.
+        \item Supports agent-based workflows and context-aware automation.
+        \item Facilitates rapid prototyping of AI assistants and copilots.
+        \item Provides building blocks for integrating LLMs into Digital Twin development pipelines.
+    \end{itemize}
+}
+
+\section{Next steps}
+
+\begin{frame}[plain]
+ \sectionpage
+\end{frame}
+
+\frame{
+    \frametitle{TODO}
+    \begin{enumerate}
+        \item Define KTWIN task to be solved by AI
+        \item Define Methodology
+        \item Define Validation
+    \end{enumerate}
+
+}
+
+\section*{}
+
+\begin{frame}
+    \frametitle{Thanks!}
+    \InfContacts
+\end{frame}
+
+\begin{frame}[allowframebreaks]
+    \frametitle{References}
+    \bibliographystyle{abntex2-alf}
+    \bibliography{presentation}
+\end{frame}
+
+\end{document}
