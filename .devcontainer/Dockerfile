@@ -40,8 +40,7 @@ RUN ~/miniconda3/bin/conda tos accept --override-channels --channel https://repo
     ~/miniconda3/bin/conda tos accept --override-channels --channel https://repo.anaconda.com/pkgs/r && \
     umask 0002 && \
     ~/miniconda3/bin/conda env create -y -f /tmp/conda-tmp/environment.yml && \
-    ~/miniconda3/bin/conda clean -afy && \
-    rm -rf /tmp/conda-tmp
+    ~/miniconda3/bin/conda clean -afy
 
 # Update PATH environment variable
 ENV PATH="/home/texlive/miniconda3/envs/$ENV_NAME/bin:/home/texlive/miniconda3/bin:$PATH"
