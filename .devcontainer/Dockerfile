@@ -1,5 +1,7 @@
 FROM registry.gitlab.com/islandoftex/images/texlive:latest
 
+ARG ENV_NAME
+
 # Install system dependencies
 RUN apt-get update && \
     apt-get install -y --no-install-recommends \
@@ -30,10 +32,6 @@ RUN mkdir -p ~/miniconda3 && \
 
 # Copy environment.yml to a temp location to create environment.
 COPY environment.yml /tmp/conda-tmp/
-
-# Extract environment name from environment.yml
-RUN ENV_NAME=$(awk '/^name:/ {print $2}' /tmp/conda-tmp/environment.yml) && \
-    echo "Environment name is $ENV_NAME"
 
 # Create conda environment
 RUN ~/miniconda3/bin/conda tos accept --override-channels --channel https://repo.anaconda.com/pkgs/main && \

@@ -51,6 +51,10 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
+      - name: Extract env name from environment.yml
+        id: env_name
+        run: echo "env_name=$(awk '/^name:/ {print $2}' environment.yml)" >> $GITHUB_OUTPUT
+
       - name: Build and push Docker image
         uses: docker/build-push-action@v6
         with:
@@ -61,3 +65,5 @@ jobs:
           labels: ${{ steps.meta.outputs.labels }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
+          build-args: |
+            ENV_NAME=${{ steps.env_name.outputs.env_name }}
