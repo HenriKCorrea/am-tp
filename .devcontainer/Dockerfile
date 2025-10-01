@@ -26,7 +26,7 @@ RUN usermod -aG sudo $USER_NAME
 USER $USER_NAME
 
 # Set user environment variables
-ENV CONDA_ROOT="$HOME/miniconda3"
+ENV CONDA_ROOT="/home/$USER_NAME/miniconda3"
 
 # Install Miniconda
 RUN mkdir -p "$CONDA_ROOT" && \
@@ -47,10 +47,10 @@ RUN if [ -f "/tmp/conda-tmp/environment.yml" ]; then \
     && rm -rf /tmp/conda-tmp
 
 # Activate conda environment by default
-RUN echo "source $CONDA_ROOT/etc/profile.d/conda.sh" >> $HOME/.bashrc && \
-    echo "conda activate $ENV_NAME" >> $HOME/.bashrc && \
-    echo "auto_activate: true" >> $HOME/.condarc && \
-    echo "default_activation_env: $ENV_NAME" >> $HOME/.condarc
+RUN echo "source $CONDA_ROOT/etc/profile.d/conda.sh" >> /home/$USER_NAME/.bashrc && \
+    echo "conda activate $ENV_NAME" >> /home/$USER_NAME/.bashrc && \
+    echo "auto_activate: true" >> /home/$USER_NAME/.condarc && \
+    echo "default_activation_env: $ENV_NAME" >> /home/$USER_NAME/.condarc
 
 # # Activate conda and update conda
 # RUN "$CONDA_ROOT/bin/conda" init bash && \
