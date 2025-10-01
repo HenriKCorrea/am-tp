@@ -20,7 +20,7 @@
   // "forwardPorts": [],
 
   // Use 'postCreateCommand' to run commands after the container is created.
-  // "postCreateCommand": "pip3 install --user -r requirements.txt",
+  // "postCreateCommand": "conda env create -f /workspaces/am-tp/environment.yml && echo 'conda activate am-tp' >> ~/.bashrc && conda activate am-tp && python -m ipykernel install --user --name am-tp --display-name 'Python (am-tp)'",
 
   // Configure tool-specific properties.
   "customizations": {

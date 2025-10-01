@@ -1,0 +1,7 @@
+name: am-tp
+channels:
+  - conda-forge
+dependencies:
+  - python=3.13
+  - jupyter
+  - ipykernel

@@ -51,13 +51,26 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
+      - name: Parse environment name from environment.yml
+        id: parse-env
+        run: |
+          if [ -f environment.yml ]; then
+            ENV_NAME=$(grep '^name:' environment.yml | awk '{print $2}' 2>/dev/null || echo "base")
+          else
+            ENV_NAME="base"
+          fi
+          echo "env_name=$ENV_NAME" >> $GITHUB_OUTPUT
+
       - name: Build and push Docker image
         uses: docker/build-push-action@v6
         with:
-          # context: .devcontainer # Not needed since no data is copied from context to image
           file: .devcontainer/Dockerfile
           push: true  # Evaluate if should push the image or not after build 
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
+          build-args: |
+            ENV_NAME=${{ steps.parse-env.outputs.env_name }}
+            USER_NAME=texlive
+
