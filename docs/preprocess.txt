@@ -1,9 +1,12 @@
-Atividade Prática 5: Pré-processamento de dados
+Practical Activity 5: Data Preprocessing
 
-Nesta atividade prática, os alunos (organizados nos grupos dos trabalhos práticos) deverão submeter um breve relato (de até 2 páginas) descrevendo 
-(i) os dados escolhidos para o projeto prático em termos de suas principais características (tamanho, dimensionalidade, tipos de atributos, distribuição de instâncias por classe ou do atributo alvo numérico, distribuição dos atributos,  etc.), 
-(ii) os problemas já identificados nos dados através da análise exploratória e (iii) as estratégias que imaginam aplicar (ou já aplicaram) para tratar os problemas mencionados no pré-processamento dos dados. Por fim, também espera-se que os alunos relatem brevemente as estratégias pretendidas para treinar e avaliar os modelos (como algoritmos estratégias de divisão de dados, métricas de avaliação...)
+In this practical activity, students (organized into practical work groups) must submit a brief report (up to 2 pages) describing:
 
-Não existe um formato pré-estabalecido. O relatório deve estar devidamente identificado com o nome do grupo, e deve ser submetido no link abaixo, em formato PDF.
+(i) the data chosen for the practical project in terms of its main characteristics (size, dimensionality, attribute types, distribution of instances by class or of the numerical target attribute, attribute distribution, etc.),
+(ii) the problems already identified in the data through exploratory analysis, and 
+(iii) the strategies they envision applying (or have already applied) to address the problems mentioned in data preprocessing. 
+Finally, students are also expected to briefly describe the strategies they intend to use to train and evaluate the models (such as algorithms, data division strategies, evaluation metrics, etc.).
 
-PRAZO: 05/10/2024, às 23:59h.
+There is no pre-established format. The report must be clearly identified with the group name and must be submitted via the link below in PDF format.
+
+DEADLINE: 10/05/2024, at 11:59 pm.
