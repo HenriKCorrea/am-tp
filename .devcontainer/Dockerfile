@@ -29,9 +29,10 @@ USER $USER_NAME
 ENV CONDA_ROOT="/home/$USER_NAME/miniconda3"
 
 # Install Miniconda
-RUN mkdir -p "$CONDA_ROOT" && \
-    wget -q https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh -O /tmp/miniconda.sh && \
-    bash /tmp/miniconda.sh -b -p -u "$CONDA_ROOT" && \
+RUN wget -q https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh -O /tmp/miniconda.sh && \
+    bash /tmp/miniconda.sh -b -p "$CONDA_ROOT" && \
+    $CONDA_ROOT/bin/conda tos accept --override-channels --channel https://repo.anaconda.com/pkgs/main && \
+    $CONDA_ROOT/bin/conda tos accept --override-channels --channel https://repo.anaconda.com/pkgs/r && \
     rm /tmp/miniconda.sh
 
 # Copy environment.yml (if found) to a temp location so we update the environment. Also
