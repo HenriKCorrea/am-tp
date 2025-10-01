@@ -1,4 +1,4 @@
-FROM registry.gitlab.com/islandoftex/images/texlive:latest
+FROM registry.gitlab.com/islandoftex/images/texlive@sha256:e51e9458a2c18970d6661c3a858c4b069de45a35ff40ecc5f8a0dfb6e53aaff4
 
 ARG ENV_NAME=base
 ARG USER_NAME=texlive
@@ -53,9 +53,3 @@ RUN echo "source $CONDA_ROOT/etc/profile.d/conda.sh" >> /home/$USER_NAME/.bashrc
     echo "conda activate $ENV_NAME" >> /home/$USER_NAME/.bashrc && \
     echo "auto_activate: true" >> /home/$USER_NAME/.condarc && \
     echo "default_activation_env: $ENV_NAME" >> /home/$USER_NAME/.condarc
-
-# # Activate conda and update conda
-# RUN "$CONDA_ROOT/bin/conda" init bash && \
-#     echo ". $CONDA_ROOT/etc/profile.d/conda.sh" >> ~/.bashrc && \
-#     echo "conda activate base" >> ~/.bashrc && \
-#     /bin/bash -c "source ~/.bashrc && conda config --set always_yes yes && conda update -q conda"
