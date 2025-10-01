@@ -447,3 +447,4 @@ TSWLatexianTemp*
 # Ignore all pdf files, except those in the texmf directory and its subdirectories
 *.pdf
 !texmf/**/*.pdf
+!docs/statement.pdf

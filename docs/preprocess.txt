@@ -1,0 +1,9 @@
+Atividade Prática 5: Pré-processamento de dados
+
+Nesta atividade prática, os alunos (organizados nos grupos dos trabalhos práticos) deverão submeter um breve relato (de até 2 páginas) descrevendo 
+(i) os dados escolhidos para o projeto prático em termos de suas principais características (tamanho, dimensionalidade, tipos de atributos, distribuição de instâncias por classe ou do atributo alvo numérico, distribuição dos atributos,  etc.), 
+(ii) os problemas já identificados nos dados através da análise exploratória e (iii) as estratégias que imaginam aplicar (ou já aplicaram) para tratar os problemas mencionados no pré-processamento dos dados. Por fim, também espera-se que os alunos relatem brevemente as estratégias pretendidas para treinar e avaliar os modelos (como algoritmos estratégias de divisão de dados, métricas de avaliação...)
+
+Não existe um formato pré-estabalecido. O relatório deve estar devidamente identificado com o nome do grupo, e deve ser submetido no link abaixo, em formato PDF.
+
+PRAZO: 05/10/2024, às 23:59h.
