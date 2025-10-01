@@ -38,7 +38,8 @@ RUN wget -q https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.s
 # Copy environment.yml (if found) to a temp location so we update the environment. Also
 # copy "noop.txt" so the COPY instruction does not fail if no environment.yml exists.
 COPY environment.yml* .devcontainer/noop.txt /tmp/conda-tmp/
-RUN if [ -f "/tmp/conda-tmp/environment.yml" ]; then \
+RUN sudo chown -R $USER_NAME:$USER_NAME /tmp/conda-tmp && \
+    if [ -f "/tmp/conda-tmp/environment.yml" ]; then \
         umask 0002 && \
         $CONDA_ROOT/bin/conda env create -y -n $ENV_NAME -f /tmp/conda-tmp/environment.yml && \
         $CONDA_ROOT/bin/conda clean -afy; \
