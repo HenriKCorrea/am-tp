@@ -448,3 +448,4 @@ TSWLatexianTemp*
 *.pdf
 !texmf/**/*.pdf
 !docs/statement.pdf
+!preprocess/coverpage.pdf

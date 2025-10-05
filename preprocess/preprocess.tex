@@ -1,0 +1,107 @@
+\documentclass[12pt]{article}
+
+\usepackage[brazil]{babel}
+\usepackage{sbc-template}
+\usepackage{graphicx}
+\usepackage[utf8]{inputenc}
+\usepackage{pdfpages}
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    filecolor=magenta,      
+    urlcolor=cyan,
+    pdftitle={Overleaf Example},
+    pdfpagemode=FullScreen,
+    }
+
+\begin{document}
+
+\includepdf[pages=1, pagecommand={}, width=\paperwidth]{coverpage.pdf}
+
+\section{Descrição dos Dados}
+
+Este projeto visa prever quantos produtos serão comprados por mês em um e-commerce (regressão) e 
+investigar quais atributos mais impactam as vendas e como se correlacionam.
+Utilizamos o \href{https://www.kaggle.com/datasets/ikramshah512/amazon-products-sales-dataset-42k-items-2025}{Amazon Products Sales Dataset 42K+ Items - 2025},
+com 42.675 linhas e 17 colunas, incluindo variáveis numéricas, categóricas e temporais.
+Para detalhes sobre a análise exploratória, pré-processamento e avaliação, consulte o \href{https://htmlpreview.github.io/?https://raw.githubusercontent.com/HenriKCorrea/am-tp/main/Result/relatorio_tecnico.html}{relatório completo}.
+
+\begin{table}[h!]
+\caption{Atributos do conjunto de dados}
+\centering
+\begin{tabular}{|l|l|p{8cm}|}
+\hline
+\textbf{Atributo} & \textbf{Tipo} & \textbf{Descrição} \\
+\hline
+\texttt{product\_title}         & Categórico & Nome completo/título do produto \\
+\texttt{product\_rating}        & Numérico   & Avaliação média dos clientes (numérica), até 5 \\
+\texttt{total\_reviews}         & Numérico   & Número total de avaliações dos clientes \\
+\texttt{purchased\_last\_month}  & Numérico   & Unidades compradas no último mês (alvo) \\
+\texttt{discounted\_price}      & Numérico   & Preço atual após desconto \\
+\texttt{original\_price}        & Numérico   & Preço original listado antes do desconto \\
+\texttt{discount\_percentage}   & Numérico   & Percentual de desconto aplicado \\
+\texttt{is\_best\_seller}       & Categórico & Produto está marcado como Best Seller \\
+\texttt{is\_sponsored}          & Categórico & Indica se é item patrocinado ou orgânico \\
+\texttt{has\_coupon}            & Categórico & Cupom de desconto aplicável (True/False) \\
+\texttt{buy\_box\_availability}  & Categórico & Disponibilidade do botão BuyBox na página de busca (ex.: Add to cart; NaN representa False) \\
+\texttt{delivery\_date}         & Temporal   & Data estimada para entrega (datetime) \\
+\texttt{sustainability\_tags}   & Categórico & Destaca sustentabilidade / eco-friendly \\
+\texttt{product\_image\_url}    & Categórico & Link direto para a imagem do produto \\
+\texttt{product\_page\_url}     & Categórico & URL da página oficial do produto na Amazon \\
+\texttt{data\_collected\_at}    & Temporal   & Data em que os dados foram coletados \\
+\texttt{product\_category}      & Categórico & Categoria atribuída ao produto (tags) \\
+\hline
+\end{tabular}
+\end{table}
+
+Esses dados permitem analisar aspectos financeiros, qualitativos e temporais dos produtos.
+As notas médias concentram-se em valores altos (4 ou 5 estrelas),
+os preços e descontos apresentam ampla variação 
+e o atributo alvo \texttt{purchased\_last\_month} possui forte concentração próxima a zero.
+
+\section{Problemas identificados na análise exploratória}
+Durante a análise exploratória, identificaram-se:
+valores ausentes em algumas variáveis, o que pode comprometer algoritmos de aprendizado de máquina;
+outliers em preço e vendas que podem ser erros ou refletir produtos muito populares, exigindo cuidado na modelagem;
+alta cardinalidade em atributos como \texttt{product\_title}, aumentando a complexidade e o risco de sobreajuste;
+escalas distintas entre variáveis (por exemplo, nota média de 1 a 5 versus número de avaliações de dezenas a centenas de milhares), requerendo padronização; e
+correlação moderada entre preços e descontos, indicando redundância a ser considerada na seleção de variáveis.
+
+\section{Estratégias de pré-processamento aplicadas}
+Para garantir a consistência do dataset e a qualidade do treinamento, aplicamos:
+(i) imputação de valores ausentes com zero para preservar instâncias;
+(ii) codificação de variáveis categóricas via Label Encoding; 
+(iii) padronização de atributos numéricos com StandardScaler (média zero e desvio padrão igual a um); e
+(iv) manutenção inicial de outliers por poderem refletir alta demanda, deixando seu tratamento para etapas futuras.
+
+\section{Estratégias de treinamento e avaliação}
+Na etapa de modelagem, adotou-se divisão 80\%/20\% (treino/teste);
+testaram-se Regressão Linear, Random Forest, Gradient Boosting e XGBoost;
+a avaliação usou MAE, RMSE e $R^2$.
+Os ensembles foram superiores
+(Gradient Boosting $R^2 \approx 0{,}969$, Random Forest $R^2 \approx 0{,}968$, XGBoost $R^2 \approx 0{,}959$)
+frente à Regressão Linear ($R^2 \approx 0{,}23$).
+Com GridSearchCV, o Random Forest atingiu $R^2 = 0{,}9703$.
+
+\section{Revisão crítica do trabalho}
+Após a leitura do material da disciplina sobre pré-processamento, revisamos o pipeline e identificamos vazamento de dados. Principais pontos:
+\begin{itemize}
+    \item Pré-processamento antes do \textit{split/k-fold}: imputação, codificação e padronização foram aplicadas antes da divisão, fazendo o teste “vazar” para o treino e inflando métricas; aceitável apenas para análise exploratória, não para avaliação de modelos.
+    \item Alvo \texttt{purchased\_last\_month}: não deve ser alterado; linhas com alvo ausente devem ser removidas. Imputar 0 induz aprendizado espúrio e distorce MAE, RMSE e $R^2$.
+    \item Imputação com 0 em preditores: distorce distribuições; usar imputadores adequados (ajustados somente no treino) durante a modelagem.
+    \item \textit{LabelEncoder} em URLs, títulos e datas: cria ordens artificiais e permite “memorização” de identificadores (overfitting). Correção: textos via TF–IDF/embeddings; datas decompostas (ano, mês, dia, dia da semana); URLs com extração de sinais úteis (domínio/categoria) ou descarte.
+    \item Padronização global com \textit{StandardScaler} em variáveis assimétricas: outliers dominam a escala. Alternativas: transformações como \textit{log1p} e escalonadores robustos (RobustScaler/QuantileTransformer), sempre ajustados apenas no treino.
+\end{itemize}
+
+\section{Conclusão e próximos passos}
+Em síntese, os resultados anteriores estão sujeitos a vazamento e métricas superestimadas.
+Como plano de ação:
+(1) refazer a análise exploratória e pré-processamento realizando o \textit{split/k-fold} antes de qualquer transformação;
+(2) não imputar nem alterar o alvo e remover linhas com alvo ausente;
+(3) imputar preditores com técnicas apropriadas, ajustando-as somente no treino;
+(4) reprocessar textos, datas e URLs conforme indicado;
+(5) aplicar transformações e escalonamento robusto para variáveis assimétricas;
+(6) reavaliar os modelos com validação cruzada e comparações justas; e
+(7) reportar métricas e explicabilidade com base no pipeline corrigido.
+\end{document}
