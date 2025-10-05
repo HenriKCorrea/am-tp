@@ -109,6 +109,34 @@ safe_plot(lambda: sns.heatmap(df[num_cols].corr(), annot=True, fmt=".2f", cmap="
 # =========================
 # (ii) Pré-processamento dos dados
 # =========================
+###
+# PROBLEMA: Limpeza e preparação dos dados
+###
+# - Qualquer pré-processamento necessário só pode ser feito após o split / k-fold do dataset.
+#   - Consequência: vazamento de dados do conjunto de teste para treino.
+#   - Consequência: Métricas otimistas que não refletem a realidade
+#   - É aceitavel para análise exploratória do dataset e seus atributos, mas não para avaliar modelos.
+# - Nunca mexa no valor do campo alvo (purchased_last_month)
+#  - Exemplo: se este fosse um dataset para detectar cancer, você é médica para julgar se a pessoa tem ou não cancer?
+#  - Se houver valores ausentes, remova as linhas (ou usar uma metodologia de um paper).
+# - Usar 0 como valor para dados ausentes, incluindo atributo alvo (purchased_last_month).
+#   - Métricas (MAE/RMSE/R2) e treino ficam distorcidos porque o modelo aprende a prever muitos zeros artificiais.
+#   - Consequência: métricas que não refletem a realidade.
+#   - Para fins de análise exploratória, descarte as linhas com valores ausentes.
+#   - Para treinamento de modelos, usar métodos apresentados pela professora na aula "limpeza e transformação de dados".
+#     - Exemplo: Criar um regressor indutor para prever os valores ausentes (exceto purchased_last_month).
+# - LabelEncoder aplicado a URLs, títulos e datas como se fossem categorias (mapeamentos numéricos arbitrários)
+#   - Efeito: Cria ordens/relacionamentos artificiais e permitem que modelos (especialmente árvores) “memorize” identificadores de produto
+#     - O modelo vai dar importância a atributos que não deveriam ter (igual ao problema da aula do cachorro / lobo na neve)
+#   - Consequência: Overfitting por vazamento de dados.
+#     - Exemplo: Prever compras com base na URL do produto.
+#   - Correção: Usar técnicas de NLP (TF-IDF, embeddings) para textos, e decompor datas em componentes (ano, mês, dia, dia da semana).
+#    - URLs podem ser processadas para extrair categorias ou domínios. Senão, descartá-las.
+# - Normalização (StandardScaler) aplicada a todas as variáveis numéricas.
+#   - Algoritmo: ajusta atributos numéricos para média zero e desvio padrão igual a um
+#   - Problema: A maioria dos atributos do dataset são extremamente enviesados / desbalanceados (skewed) e não seguem uma distribuição normal.
+#   - Efeito: Os outliers vão dominar toda a escala, distorcendo a normalização.
+#   - Consequência: Métricas (MAE/RMSE/R2) e treino ficam distorcidos.
 df.fillna(0, inplace=True)
 cat_cols = df.select_dtypes(include=['object']).columns.tolist()
 for col in cat_cols:
