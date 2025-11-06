@@ -1,8 +1,77 @@
 \section{Trabalhos Relacionados}
 \label{sec:related-work}
 
-% Breve revisão de trabalhos sobre previsão de vendas
-% Técnicas de ML aplicadas em e-commerce
-% Interpretabilidade em modelos de vendas
-% Diferenciais do trabalho
+Para contextualizar este trabalho, conduzimos uma busca sistemática simplificada na literatura recente sobre
+    previsão de vendas em e-commerce utilizando Aprendizado de Máquina.
 
+\subsection{Metodologia de Busca}
+
+A seleção de trabalhos relacionados seguiu a seguinte estratégia:
+
+\textbf{Query de busca:}\\
+\texttt{("sales~prediction"~OR~"sales~forecasting")~AND}\\
+\texttt{("e-commerce"~OR~"online~retail")~AND}\\
+\texttt{("machine~learning"~OR~"regression")}
+
+\textbf{Bibliotecas digitais consultadas:}
+\begin{itemize}
+    \item IEEE Xplore (\url{https://ieeexplore.ieee.org/})
+    \item ACM Digital Library (\url{https://dl.acm.org/})
+    \item Google Scholar (\url{https://scholar.google.com/})
+\end{itemize}
+
+\textbf{Critérios de inclusão:}
+\begin{itemize}
+    \item Publicações entre 2020-2025
+    \item Abordagem de previsão de vendas em contexto de e-commerce
+    \item Uso de técnicas de Machine Learning
+    \item Texto completo disponível
+\end{itemize}
+
+\textbf{Estratégia de seleção:} 
+Para cada biblioteca, os resultados foram ordenados por relevância e os dois 
+primeiros artigos que atenderam aos critérios de inclusão foram selecionados, 
+totalizando 6 trabalhos analisados.
+
+\subsection{Análise dos Trabalhos}
+
+% Para cada trabalho, descrever:
+% 1. Objetivo/problema abordado
+% 2. Metodologia/algoritmos utilizados
+% 3. Principais resultados
+% 4. Limitações ou lacunas
+
+\textbf{[Autor et al., Ano] - Título do Trabalho 1 (IEEE)}
+
+[Resumo do trabalho: problema, metodologia, resultados principais]
+
+\textbf{[Autor et al., Ano] - Título do Trabalho 2 (IEEE)}
+
+[...]
+
+% Continuar para os 6 trabalhos
+
+\subsection{Posicionamento do Presente Trabalho}
+
+Embora os trabalhos analisados demonstrem a aplicabilidade de ML em previsão 
+de vendas, identificamos as seguintes lacunas/oportunidades:
+
+\begin{itemize}
+    \item \textbf{Interpretabilidade:} Poucos trabalhos focam em explicar 
+          quais features são mais importantes [se aplicável]
+    
+    \item \textbf{Comparação produto vs. marketing:} Não identificamos 
+          estudos que quantificam sistematicamente o impacto relativo dessas 
+          categorias de fatores
+    
+    \item \textbf{Dataset contemporâneo:} Utilizamos dados de 2025 do 
+          marketplace Amazon, capturando features modernas (sponsored products, 
+          buy box, etc.)
+    
+    \item \textbf{Reprodutibilidade:} Disponibilizamos código e dados 
+          públicos, facilitando validação e extensão
+\end{itemize}
+
+Este trabalho contribui ao aplicar técnicas de interpretabilidade (SHAP, 
+feature importance) para comparar sistematicamente o impacto de características 
+intrínsecas e estratégias de marketing em um dataset de larga escala.
