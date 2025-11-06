@@ -9,29 +9,43 @@ Para contextualizar este trabalho, conduzimos uma busca sistemática simplificad
 A seleção de trabalhos relacionados seguiu a seguinte estratégia:
 
 \textbf{Query de busca:}\\
-\texttt{("sales~prediction"~OR~"sales~forecasting")~AND}\\
-\texttt{("e-commerce"~OR~"online~retail")~AND}\\
-\texttt{("machine~learning"~OR~"regression")}
+\texttt{("sales~prediction"~OR "sales~forecasting")~AND}\\
+\texttt{("e-commerce"~OR "online~retail")~AND}\\
+\texttt{("machine~learning"~OR "regression")~AND}\\
+\texttt{("feature~importance"~OR "product~characteristics"~OR "marketing~strategies")}
 
 \textbf{Bibliotecas digitais consultadas:}
 \begin{itemize}
     \item IEEE Xplore (\url{https://ieeexplore.ieee.org/})
-    \item ACM Digital Library (\url{https://dl.acm.org/})
-    \item Google Scholar (\url{https://scholar.google.com/})
+    \item ScienceDirect (\url{https://www.sciencedirect.com/})
+    \item SpringerLink (\url{https://link.springer.com/})
 \end{itemize}
 
 \textbf{Critérios de inclusão:}
 \begin{itemize}
     \item Publicações entre 2020-2025
-    \item Abordagem de previsão de vendas em contexto de e-commerce
-    \item Uso de técnicas de Machine Learning
-    \item Texto completo disponível
+    \item Abordagem de previsão de vendas em contexto de e-commerce ou 
+          varejo online
+    \item Uso de técnicas de Machine Learning para regressão
+    \item Análise de features relacionadas a produto e/ou marketing
+    \item Texto completo disponível via acesso institucional
 \end{itemize}
 
-\textbf{Estratégia de seleção:} 
-Para cada biblioteca, os resultados foram ordenados por relevância e os dois 
+\textbf{Critérios de exclusão:}
+\begin{itemize}
+    \item Trabalhos focados exclusivamente em séries temporais sem 
+          análise de features de produto ou marketing
+    \item Trabalhos puramente metodológicos sem aplicação em e-commerce
+    \item Trabalhos de classificação (e.g., prever categoria best-seller) 
+          em vez de regressão (prever valor de vendas)
+\end{itemize}
+
+\textbf{Estratégia de seleção:} Para cada biblioteca digital, os resultados 
+foram ordenados por relevância. Priorizando os critérios acima, os dois 
 primeiros artigos que atenderam aos critérios de inclusão foram selecionados, 
-totalizando 6 trabalhos analisados.
+totalizando 6 trabalhos analisados. Para artigos com títulos e abstracts 
+promissores mas com alinhamento incerto, realizou-se leitura da introdução 
+e análise de figuras/tabelas para validação antes da inclusão final.
 
 \subsection{Análise dos Trabalhos}
 
@@ -41,37 +55,53 @@ totalizando 6 trabalhos analisados.
 % 3. Principais resultados
 % 4. Limitações ou lacunas
 
-\textbf{[Autor et al., Ano] - Título do Trabalho 1 (IEEE)}
+\textbf{Li (2022) - A Feature Engineering Approach for Tree-based Machine 
+Learning Sales Forecast}
 
-[Resumo do trabalho: problema, metodologia, resultados principais]
+\cite{li2022} propõe um framework sistemático de feature engineering (8C) 
+para previsão de vendas em varejo, categorizando features por tipo de 
+impacto: \textit{current effect} (fatores de impacto direto), \textit{carryover 
+effect} (influência de períodos anteriores), \textit{collaboration effect} 
+(estratégias combinadas), \textit{cost effect} (custos de marketing), 
+\textit{connatural effect} (características do produto), \textit{competition 
+effect} (fatores competitivos), \textit{customer effect} (preferências do 
+cliente) e \textit{correlative effect} (ambiente externo). Utilizando o 
+dataset Rossmann Store (310.527 amostras, 1.941 dias), os autores aplicaram 
+algoritmos genéticos para gerar 37 novas features, expandindo de 16 para 80 
+features totais. Quatro modelos tree-based foram avaliados: XGBoost, LightGBM, 
+CatBoost e Random Forest.
 
-\textbf{[Autor et al., Ano] - Título do Trabalho 2 (IEEE)}
+\textbf{Principais resultados:} Com feature engineering, Random Forest 
+alcançou MAPE de 10,2\% e RMSPE de 14,4\%, representando melhorias de até 
+50\% sobre features brutas. O CatBoost apresentou a maior melhoria relativa 
+(17\% em MAPE). A análise de feature importance revelou que features geradas 
+por combinação de vendas históricas com medianas dominaram o ranking de 
+importância em ambos LightGBM e Random Forest, demonstrando a eficácia da 
+engenharia de features.
 
-[...]
+\textbf{Relevância para este trabalho:} O framework 8C fornece uma estrutura 
+conceitual que pode ser mapeada para nossa dicotomia produto vs. marketing: 
+características intrínsecas do produto correspondem ao \textit{connatural 
+effect} e \textit{customer effect} (e.g., avaliações, ratings), enquanto 
+estratégias de marketing correspondem ao \textit{collaboration effect} e 
+\textit{cost effect} (e.g., patrocínio, promoções, cupons). A ênfase em 
+feature importance analysis alinha-se diretamente com nossa abordagem de 
+interpretabilidade via SHAP.
 
-% Continuar para os 6 trabalhos
+\textbf{Limitações e lacunas:} Embora Li (2022) categorize features por tipo 
+de impacto, o trabalho não quantifica explicitamente a importância relativa 
+de cada categoria (produto vs. marketing vs. temporal). O dataset utilizado 
+(Rossmann Store) representa varejo físico e online agregado por loja, carecendo 
+de features específicas de e-commerce puro como patrocínio digital, cupons 
+online e badges de plataforma (e.g., best seller). Além disso, o foco em 
+\textit{carryover effect} (séries temporais) difere de nossa abordagem 
+cross-sectional que prioriza características estáticas de produto versus 
+dinâmicas de marketing.
+
+
 
 \subsection{Posicionamento do Presente Trabalho}
 
-Embora os trabalhos analisados demonstrem a aplicabilidade de ML em previsão 
-de vendas, identificamos as seguintes lacunas/oportunidades:
+% Apresentar tabela comparativa dos trabalhos relacionados
+% Destacar como o presente trabalho se diferencia
 
-\begin{itemize}
-    \item \textbf{Interpretabilidade:} Poucos trabalhos focam em explicar 
-          quais features são mais importantes [se aplicável]
-    
-    \item \textbf{Comparação produto vs. marketing:} Não identificamos 
-          estudos que quantificam sistematicamente o impacto relativo dessas 
-          categorias de fatores
-    
-    \item \textbf{Dataset contemporâneo:} Utilizamos dados de 2025 do 
-          marketplace Amazon, capturando features modernas (sponsored products, 
-          buy box, etc.)
-    
-    \item \textbf{Reprodutibilidade:} Disponibilizamos código e dados 
-          públicos, facilitando validação e extensão
-\end{itemize}
-
-Este trabalho contribui ao aplicar técnicas de interpretabilidade (SHAP, 
-feature importance) para comparar sistematicamente o impacto de características 
-intrínsecas e estratégias de marketing em um dataset de larga escala.
