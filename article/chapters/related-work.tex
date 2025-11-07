@@ -1,267 +1,78 @@
 \section{Trabalhos Relacionados}
 \label{sec:related-work}
 
-Para contextualizar este trabalho, conduzimos uma busca sistemática simplificada na literatura recente sobre
-    previsão de vendas em e-commerce utilizando Aprendizado de Máquina, com foco em
-    análise de importância de features.
+A literatura sobre previsão de vendas em e-commerce utilizando Machine Learning é extensa,
+    mas há escassez de estudos que
+    \textbf{(1)} quantifiquem explicitamente a importância relativa de
+        produto versus estratégias de marketing e
+    \textbf{(2)} apliquem abordagem transversal em dados de marketplace digital.
+Esta seção analisa trabalhos relevantes segundo essas dimensões.
 
-\subsection{Metodologia de Busca}
+\subsection{Análise de Importância Produto vs. Marketing}
 
-A seleção de trabalhos relacionados seguiu a seguinte estratégia:
+\cite{sharma2019} investigam vendas de livros na Amazon India (1.408 produtos)
+    comparando regressão múltipla, Decision Tree (C5.0) e Redes Neurais (ANN).
+Analisam features de produto (\textit{price}, \textit{average ratings}, \textit{review volume})
+    e marketing (\textit{discount rate}, \textit{free delivery}),
+    extraindo sentimentos de reviews via NLP.
+\textit{review volume} (produto) domina importância em todos os modelos
+    (ANN: 0.17), enquanto \textit{discount rate} (marketing) tem impacto mínimo (0.01-0.06),
+    contradizendo teoria de transaction utility.
+Interações como Discount Rate x Review Volume foram significativas,
+    sugerindo que marketing é efetivo apenas quando características de produto (volume de reviews) são fortes.
+Utilizam feature importance heterogênea entre modelos
+    (coeficientes de regressão, predictor importance de DT, pesos de ANN)
+    sem interpretabilidade unificada via SHAP.
+Dataset limitado a livros (categoria única) e
+    não quantificam contribuição relativa agregada produto vs. marketing
+    como categorias conceituais.
 
-\textbf{Query de busca:}\\
-\texttt{("sales~prediction"~OR "sales~forecasting")~AND}\\
-\texttt{("e-commerce"~OR "online~retail")~AND}\\
-\texttt{("machine~learning"~OR "regression")~AND}\\
-\texttt{("feature~importance"~OR "product~characteristics"~OR "marketing~strategies")}
+\cite{zhao2020} analisam fatores de vendas em Taobao
+    categorizando features em quatro grupos:
+    \textit{online reviews},
+    \textit{review system curation} (clustering de sentimentos),
+    \textit{promotional marketing} (discount rate, cupons) e
+    \textit{seller guarantees} (7-day returns, freight insurance).
+Utilizando redes neurais (SFNN model) com matriz de pesos,
+    identificam que \textit{número de palavras de sentimento} (review curation) tem maior impacto,
+    seguido por \textit{review volume} e \textit{discount rate}.
+Fornecem framework conceitual para categorização produto vs. marketing,
+    mas empregam pesos de rede neural para interpretação
+    ao invés de técnicas agnósticas a modelos como SHAP.
 
-\textbf{Bibliotecas digitais consultadas:}
-\begin{itemize}
-    \item IEEE Xplore (\url{https://ieeexplore.ieee.org/})
-    \item ScienceDirect (\url{https://www.sciencedirect.com/})
-    \item SpringerLink (\url{https://link.springer.com/})
-\end{itemize}
+\subsection{Feature Engineering e Interpretabilidade}
 
-\textbf{Critérios de inclusão:}
-\begin{itemize}
-    \item Publicações entre 2019-2025
-    \item Abordagem de análise de vendas em contexto de e-commerce ou varejo online
-    \item Uso de técnicas de Machine Learning (preferencialmente tree-based ou 
-          com análise de feature importance)
-    \item Texto completo disponível via acesso institucional
-    \item \textbf{Pelo menos um dos seguintes:}
-    \begin{itemize}
-        \item Análise explícita de importância de features de produto ou marketing
-        \item Framework conceitual de categorização de features (e.g., produto vs. marketing)
-        \item Uso de técnicas de interpretabilidade (SHAP, feature importance, etc.)
-    \end{itemize}
-\end{itemize}
+\cite{li2022} propõe framework 8C de feature engineering para forecast de vendas,
+    categorizando features por tipo de impacto:
+    \textit{connatural effect} (características de produto),
+    \textit{cost effect} (custos de marketing),
+    \textit{carryover effect} (influência temporal), entre outros.
+Utilizando dataset Rossmann (310.527 amostras, 1.941 dias),
+    aplicam algoritmos genéticos para gerar 37 novas features,
+    alcançando MAPE de 10.2\% (Random Forest).
+Feature importance nativa de LightGBM/RF revelou domínio de features temporais
+    (combinação de vendas históricas com medianas).
+Utiliza abordagem temporal (séries de 1.941 dias) focada em forecast,
+    enquanto nosso trabalho adota análise transversal para identificar correlações.
+Dataset de varejo físico/online agregado por loja,
+    sem features específicas de marketplace digital (patrocínio, badges, cupons).
+Embora categorize features conceitualmente,
+    não quantifica importância relativa produto vs. marketing via agregação.
 
-\textbf{Critérios de exclusão:}
-\begin{itemize}
-    \item Trabalhos puramente metodológicos sem aplicação em contexto de vendas/e-commerce
-    \item Trabalhos de classificação (e.g., churn, categoria de produto) quando 
-          o foco for exclusivamente categórico sem análise de volume/valor
-    \item Trabalhos sem qualquer análise de importância ou interpretabilidade de features
-    \item Estudos focados exclusivamente em comportamento de navegação/clickstream 
-          sem conexão com vendas realizadas
-\end{itemize}
-
-
-\textbf{Estratégia de seleção:}
-Para cada biblioteca digital, os resultados foram ordenados por relevância.
-Dada a \textbf{escassez de trabalhos com abordagem puramente transversal} focada em
-    características de produto versus marketing, adotamos uma estratégia pragmática de seleção:
-
-\begin{enumerate}
-    \item Priorizamos trabalhos que analisam features de produto e/ou marketing, 
-          mesmo que utilizem abordagens temporais (desde que não sejam 
-          exclusivamente baseadas em padrões históricos agregados)
-    \item Selecionamos trabalhos que demonstrem análise de feature importance 
-          ou interpretabilidade, independentemente da metodologia temporal/transversal
-    \item Para cada biblioteca, buscamos identificar \textbf{1-2 trabalhos} que 
-          melhor se alinham aos critérios acima
-    \item Artigos com títulos e abstracts promissores tiveram introdução e 
-          metodologia analisadas para validação de alinhamento antes da inclusão
-\end{enumerate}
-
-A busca resultou em \textbf{3-4 trabalhos} que,
-    embora não sejam perfeitamente alinhados ao nosso posicionamento transversal,
-    fornecem base conceitual e metodológica relevante.
-A escassez identificada reforça a contribuição deste trabalho ao analisar especificamente a dicotomia
-    produto versus marketing em dados de marketplace digital.
-
-\subsection{Análise dos Trabalhos}
-
-\textbf{Sharma et al. (2019) - Analysis of Book Sales Prediction at Amazon Marketplace in India: A Machine Learning Approach}
-
-\cite{sharma2019} investigam previsão de vendas de livros no marketplace Amazon India utilizando múltiplas técnicas de modelagem:
-    regressão múltipla,
-    Decision Tree (C5.0) e
-    Artificial Neural Networks (ANN).
-O estudo utiliza 1.408 livros com 16.000 reviews coletados em dezembro/2017, analisando
-    fatores de produto (
-            \textit{price},
-            \textit{average ratings},
-            \textit{review volume}, 
-            \textit{number of pages}) e
-    marketing (
-        \textit{discount rate},
-        \textit{discount amount},
-        \textit{free delivery}).
-Análise de sentimento (Sentiment Analysis API e SentiStrength) extrai três variáveis adicionais:
-    \textit{overall polarity},
-    \textit{positive sentiment strength} e
-    \textit{negative sentiment strength}.
-Seis efeitos de interação são incluídos:
-    Discount Rate × Review Volume,
-    Discount Rate × Average Ratings,
-    Review Volume × Positive/Negative Sentiment,
-    Discount Rate × Positive/Negative Sentiment.
-
-\textbf{Principais resultados:} 
-\textbf{(1) Feature importance:} Todos os três modelos confirmam \textit{review volume} como preditor mais importante de vendas.
-Decision Tree reportou review volume com maior importância, seguido por interações com sentimentos.
-ANN (ensemble de 10 MLPs) atribuiu importância de
-    0.17 para review volume,
-    0.17 para Review Volume × Positive Sentiment e
-    0.16 para Discount Rate × Review Volume. 
-\textbf{(2) Achados contraditórios sobre marketing:}
-    \textit{Discount rate} e \textit{discount amount} apresentaram efeito mínimo ou insignificante nas vendas
-    ($p>0.05$ na regressão, importância 0.01-0.06 em DT/ANN),
-    contradizendo teoria de transaction utility. \textit{Average ratings} também não foi significativo em nenhum modelo.
-\textbf{(3) Sentimento:} Regressão identificou positive/negative sentiment como
-    significativos ($p<0.01$, coeficientes 0.19/-0.27),
-    mas ANN reportou importância zero (0.0) para ambos como features isoladas, sugerindo que
-    sentimento afeta vendas apenas via interações com review volume.
-\textbf{(4) Interações:} Review Volume × Negative Sentiment e Discount Rate × Review Volume
-    foram significativos em todos os modelos,
-    demonstrando que descontos são efetivos quando review volume é alto.
-\textbf{(5) Performance:} ANN ensemble alcançou R² de 0.708 (70.8\% accuracy),
-    superando regressão (R²=0.52) e Decision Tree (66.9\% accuracy).
-
-\textbf{Relevância para este trabalho:}
-Este estudo fornece evidência empírica direta sobre importância
-    relativa produto vs. marketing em \textbf{marketplace Amazon} (contexto idêntico ao nosso dataset),
-    utilizando feature importance explícita em modelos tree-based (Decision Tree C5.0).
-O achado central de que \textit{review volume} (característica de produto refletindo popularidade/qualidade percebida)
-    domina sobre \textit{discount rate/amount} (estratégias de marketing)
-    alinha-se com nossa hipótese de investigação sobre dicotomia produto vs. marketing.
-A descoberta de que \textit{average ratings} tem efeito insignificante enquanto \textit{review volume}
-    é crítico sugere que quantidade de validação social (volume) supera qualidade numérica (ratings),
-    insight relevante para análise de features \texttt{rating} e \texttt{rating\_count} em nosso dataset.
-
-A análise de efeitos de interação (e.g., Discount Rate × Review Volume significativo) demonstra
-    importância de considerar relações não-lineares entre categorias produto/marketing,
-    conceito explorado em nosso trabalho via SHAP interaction values.
-O resultado de que descontos são efetivos apenas quando review volume é alto sugere que
-    estratégias de marketing (cupons, patrocínio) podem ter impacto moderado por características de produto,
-    hipótese testável em nosso contexto via análise de interações SHAP entre
-    \texttt{discount\_percentage}, \texttt{coupons} e \texttt{rating\_count}.
-
-\textbf{Diferenças metodológicas:}
-Sharma et al. utilizam Sales Rank como proxy de vendas (variável ordinal convertida em 3 bins para classificação),
-    enquanto nosso trabalho analisa \texttt{boughtInLastMonth} (volume absoluto de vendas mensais).
-Realizam análise de sentimento de texto de reviews via NLP (Overall Polarity, Sentiment Strengths),
-    features não disponíveis em nosso dataset estruturado de marketplace, que
-    utiliza atributos diretos como \texttt{sponsored}, \texttt{best\_seller\_badge} e \texttt{coupons}
-    ao invés de sentimento textual. 
-
-A abordagem metodológica compara três técnicas
-    (Regressão, Decision Tree, ANN)
-    avaliando feature importance via análise de coeficientes (regressão),
-    predictor importance (DT) e
-    pesos de rede (ANN),
-    sem utilizar SHAP values para interpretabilidade unificada.
-Nosso trabalho padroniza análise de importância via SHAP em modelos tree-based exclusivamente
-    (XGBoost, Random Forest, LightGBM),
-    fornecendo medidas consistentes e comparáveis via Shapley values
-    ao invés de métricas heterogêneas por modelo.
-
-Dataset representa snapshot de dezembro/2017 com Sales Rank coletado em janeiro/2018 (lag temporal de 1 mês),
-    enquanto utilizamos dados transversal de setembro/2025 sem séries temporais.
-Foco em categoria única (livros) difere de nosso dataset multi-categoria Amazon,
-    permitindo análise de generalização cross-category via feature \texttt{category\_id}.
-
-Por fim, embora demonstrem importância de review volume via três modelos,
-    não quantificam contribuição relativa agregada produto vs. marketing como categorias conceituais,
-    lacuna que nosso trabalho preenche via SHAP values agregados por grupo de features.
-
-\textbf{Li (2022) - A Feature Engineering Approach for Tree-based Machine 
-Learning Sales Forecast}
-
-\cite{li2022} propõe um framework sistemático de feature engineering (8C) para
-    previsão de vendas em varejo, categorizando features por tipo de impacto:
-    \textit{current effect}
-    (fatores de impacto direto),
-    \textit{carryover effect} (influência de períodos anteriores),
-    \textit{collaboration effect} (estratégias combinadas),
-    \textit{cost effect} (custos de marketing), 
-    \textit{connatural effect} (características do produto),
-    \textit{competition effect} (fatores competitivos),
-    \textit{customer effect} (preferências do cliente) e
-    \textit{correlative effect} (ambiente externo).
-Utilizando o dataset Rossmann Store (310.527 amostras, 1.941 dias), os autores aplicaram 
-    algoritmos genéticos para gerar 37 novas features, expandindo de 16 para 80 features totais.
-Quatro modelos tree-based foram avaliados: XGBoost, LightGBM, CatBoost e Random Forest.
-
-\textbf{Principais resultados:}
-Com feature engineering,
-    Random Forest alcançou MAPE de 10,2\% e RMSPE de 14,4\%,
-    representando melhorias de até 50\% sobre features brutas.
-O CatBoost apresentou a maior melhoria relativa (17\% em MAPE).
-A análise de feature importance revelou que
-    features geradas por combinação de vendas históricas com medianas
-    dominaram o ranking de importância em ambos LightGBM e Random Forest,
-    demonstrando a eficácia da engenharia de features.
-
-\textbf{Relevância para este trabalho:}
-O framework 8C fornece uma estrutura conceitual que pode ser mapeada para nossa dicotomia produto vs. marketing:
-    características intrínsecas do produto correspondem ao
-    \textit{connatural effect} e \textit{customer effect} (e.g., avaliações, ratings),
-    enquanto estratégias de marketing correspondem ao
-    \textit{collaboration effect} e \textit{cost effect} (e.g., patrocínio, promoções, cupons).
-A ênfase em feature importance analysis alinha-se diretamente com nossa abordagem de 
-    interpretabilidade via SHAP.
-
-\textbf{Diferenças metodológicas:}
-Li utiliza abordagem temporal (séries de 1.941 dias) focada em previsão de vendas futuras,
-    enquanto nosso trabalho adota análise transversal de um snapshot temporal com foco em 
-    identificar correlações entre características de produto/marketing e volume de vendas observado.
-Além disso, o dataset Rossmann representa varejo físico e online agregado por loja,
-    enquanto utilizamos dados de marketplace digital (Amazon) com features específicas de e-commerce como
-    patrocínio digital e badges de plataforma.
-Por fim, embora Li categorize features conceitualmente,
-    não quantifica explicitamente a importância relativa produto vs. marketing, lacuna que nosso trabalho busca preencher.
-
-\textbf{Zhang (2025) - Forecasting E-Market Sales Performance: Use of Big Data Analytics}
-
-\cite{ZHANG2025} investigam fatores determinantes de sales performance em e-marketplaces,
-    analisando a moderação de
-    \textit{answered questions},
-    \textit{review usefulness},
-    \textit{product category} e
-    \textit{promotional offers}
-    sobre a relação entre online reviews e vendas.
-Utilizando regressão múltipla com análise de interações, os autores categorizam features em dois grupos:
-    características de produto (\textit{online reviews}, \textit{review usefulness}, \textit{product category}) e
-    estratégias de marketing (\textit{promotional offers}, \textit{answered questions}).
-
-\textbf{Principais resultados:}
-A análise de moderação revelou que \textit{promotional offers} e \textit{product category} 
-    possuem papel significativo como moderadores da relação entre reviews e vendas, indicando que
-    o efeito de características de produto varia conforme estratégias de marketing aplicadas.
-\textit{Review usefulness} demonstrou impacto positivo independente, enquanto
-    \textit{answered questions} atuou como moderador fortalecendo a influência de reviews positivos.
-
-\textbf{Relevância para este trabalho:}
-Fornece \textbf{framework conceitual} essencial para categorização de features em e-commerce segundo
-    dicotomia produto vs. marketing, base teórica diretamente alinhada com nosso problema de pesquisa.
-A análise de efeitos de interação (moderação) entre categorias conceituais demonstra importância de considerar
-    relações não-lineares, conceito explorado em nosso trabalho via SHAP interaction values.
-
-\textbf{Diferenças metodológicas:}
-Utiliza abordagem estatística tradicional (regressão múltipla com termos de interação)
-    sem técnicas de interpretabilidade ML (SHAP/feature importance tree-based).
-Nosso trabalho expande essa análise categórica utilizando modelos tree-based (XGBoost, Random Forest, LightGBM) e
-    quantifica importância relativa produto vs. marketing via SHAP values, fornecendo
-    medidas precisas de contribuição marginal ao invés de coeficientes de moderação.
-Adicionalmente, o estudo não especifica dataset ou contexto de marketplace,
-    enquanto utilizamos dados reais de Amazon com features específicas de plataforma digital.
+\cite{diwandari2025} exploram métodos de seleção de features
+    (Information Gain, Chi-Square, Fisher's Discriminant Ratio)
+    para predição de compras em e-commerce usando clickstream data.
+Categorizam features em User, Item, Category, Customer-Item e Customer-Category,
+    identificando que \textit{probabilidade histórica de compra} e \textit{atributos temporais}
+    (day of month, day of week) apresentam maior poder discriminativo.
+Chi-Square minimizou class overlap entre compradores/não-compradores.
+Demonstram importância de categorização sistemática de features,
+    mas focam em \textbf{seleção pré-modelo} (feature engineering)
+    ao invés de \textbf{interpretabilidade pós-modelo} via SHAP.
 
 \subsection{Posicionamento do Presente Trabalho}
 
-\subsection{Posicionamento do Presente Trabalho}
-
-A análise dos trabalhos relacionados revela uma lacuna importante na literatura:
-    embora existam estudos sobre previsão de vendas em e-commerce utilizando machine learning,
-    há escassez de pesquisas que 
-    \textbf{(1)} quantifiquem explicitamente a importância relativa de características de produto versus estratégias de marketing,
-    \textbf{(2)} utilizem técnicas modernas de interpretabilidade (SHAP values) para análise unificada entre modelos tree-based, e
-    \textbf{(3)} apliquem abordagem transversal em dados de marketplace digital real com features específicas de plataforma.
-
-A Tabela~\ref{tab:related-work-comparison} apresenta uma síntese comparativa dos trabalhos analisados,
-    destacando as principais diferenças metodológicas e de escopo em relação ao presente estudo.
+A Tabela~\ref{tab:related-work-comparison} sintetiza as diferenças metodológicas entre os trabalhos analisados.
 
 \begin{table}[htbp]
 \centering
@@ -270,91 +81,52 @@ A Tabela~\ref{tab:related-work-comparison} apresenta uma síntese comparativa do
 \small
 \begin{tabular}{@{}lcccc@{}}
     \toprule
-    \textbf{Aspecto} & \textbf{Sharma} & \textbf{Li} & \textbf{Zhang} & \textbf{Este trabalho} \\
-    & \textbf{(2019)} & \textbf{(2022)} & \textbf{(2025)} & \\
+    \textbf{Aspecto} & \textbf{Sharma} & \textbf{Li} & \textbf{Zhao} & \textbf{Este trabalho} \\
+    & \textbf{2019} & \textbf{2022} & \textbf{2020} & \\
     \midrule
-    Contexto & Amazon India & Rossmann & E-marketplace & Amazon global \\
-    & (livros) & (físico+online) & (genérico) & (multi-categoria) \\
+    Contexto & Amazon India & Rossmann & Taobao & Amazon global \\
+    & (livros) & (físico+online) & (e-comm.) & (eletrônicos) \\
     \addlinespace
-    Abordagem & transversal & Temporal & Não especif. & transversal \\
+    Abordagem & Transversal & Temporal & Transversal & Transversal \\
+    & (snapshot) & (1.941 dias) & (snapshot) & (snapshot) \\
     \addlinespace
-    Modelos ML & Reg., DT, ANN & XGB, LGBM, & Regressão & XGB, RF, \\
-    & & CatBoost, RF & múltipla & LGBM \\
+    Modelos ML & Reg., DT, ANN & XGB, LGBM, & SFNN (NN) & XGB, RF, \\
+    & & CatBoost, RF & & LGBM \\
     \addlinespace
-    Interpretab. & Feature imp. & Feature imp. & Coeficientes & \textbf{SHAP values} \\
-    & heterogênea & nativa & regressão & \textbf{(unificado)} \\
-    \addlinespace
-    Análise de & 6 termos de & Não & Moderação & SHAP \\
-    interações & interação & reportado & (regressão) & interaction \\
+    Interpretab. & Feature imp. & Feature imp. & Pesos de rede & \textbf{SHAP values} \\
+    & heterogênea & nativa & neural & \textbf{(unificado)} \\
     \addlinespace
     Quantif. & Não & Não & Não & \textbf{Sim} \\
-    produto vs. & (por feature) & (framework & (moderação) & \textbf{(agregado)} \\
+    produto vs. & (por feature) & (framework & (4 categorias) & \textbf{(agregado)} \\
     marketing & & conceitual) & & \\
     \bottomrule
 \end{tabular}
 \end{table}
 
-\textbf{Contribuições diferenciadoras deste trabalho:}
+\textbf{Contribuições diferenciadoras:}
 
 \begin{enumerate}
     \item \textbf{Quantificação explícita produto vs. marketing:}
-    Enquanto Sharma et al.~(2019) e Zhang~(2025) categorizam features conceitualmente,
-        nosso trabalho quantifica empiricamente a contribuição relativa agregada de cada categoria
-        via SHAP values somados por grupo de features.
-    Esta abordagem fornece uma medida objetiva (em escala absoluta de impacto em vendas)
-        da importância de investir em características intrínsecas do produto
-        versus estratégias de marketing digital.
+    Enquanto \cite{sharma2019} e \cite{zhao2020} analisam features individualmente,
+        nosso trabalho agrega SHAP values por categoria conceitual,
+        fornecendo medida objetiva (em escala percentual) da importância relativa
+        de características de produto versus estratégias de marketing.
     
     \item \textbf{Interpretabilidade unificada via SHAP:}
-    Li~(2022) utiliza feature importance nativa de LightGBM/RF,
-        enquanto Sharma et al.~(2019) comparam métricas heterogêneas entre modelos
-        (coeficientes de regressão, predictor importance de DT, pesos de ANN).
-    Nosso trabalho padroniza a análise de importância via SHAP values,
-        garantindo comparabilidade rigorosa entre XGBoost, Random Forest e LightGBM
-        através de uma métrica teoricamente fundamentada (Shapley values da teoria dos jogos).
+    Diferentemente de \cite{sharma2019}, que compara métricas heterogêneas entre modelos,
+        e \cite{li2022}, que utiliza feature importance nativa,
+        padronizamos análise via SHAP values (Shapley values da teoria dos jogos),
+        garantindo comparabilidade rigorosa entre XGBoost, Random Forest e LightGBM.
     
     \item \textbf{Features específicas de marketplace digital:}
-    Diferentemente de Li~(2022), que analisa varejo físico/online tradicional,
-        e Zhang~(2025), que utiliza features genéricas (\textit{promotional offers}),
-        nosso dataset captura estratégias específicas de plataformas digitais modernas:
-        \texttt{sponsored} (patrocínio de visibilidade),
-        \texttt{best\_seller\_badge} (gamificação de reputação),
-        \texttt{coupons} (promoções direcionadas) e
-        \texttt{discount\_percentage} (transparência de desconto).
-    Esta granularidade permite análise mais precisa do impacto de táticas de marketing digital
-        vs. atributos de produto em ambientes de e-commerce contemporâneos.
+    Nosso dataset captura estratégias de plataformas modernas
+        (\texttt{is\_sponsored}, \texttt{has\_coupon}, \texttt{is\_best\_seller}, \texttt{sustainability\_tags}),
+        permitindo análise mais precisa do impacto de táticas de marketing digital
+        versus atributos de produto em e-commerce contemporâneo.
     
     \item \textbf{Abordagem transversal para análise de correlações:}
-    Enquanto Li~(2022) foca em previsão temporal (forecast de vendas futuras usando séries históricas),
-        nosso trabalho adota análise transversal para identificar
-        \textbf{quais características presentes no momento atual}
+    Enquanto \cite{li2022} foca em forecast temporal (padrões de sequência, sazonalidade),
+        identificamos \textbf{quais características presentes no momento atual}
         correlacionam-se com alto volume de vendas.
-    Esta distinção é metodologicamente relevante:
-        abordagens temporais priorizam padrões de sequência (carryover effects, sazonalidade),
-        enquanto nossa análise identifica fatores de diferenciação entre produtos
-        em um mesmo período temporal, mais adequado para decisões estratégicas de
-        posicionamento de produto e alocação de budget de marketing.
-    
-    \item \textbf{Contexto empírico Amazon global multi-categoria:}
-    Sharma et al.~(2019) limitam-se a livros no marketplace Amazon India,
-        enquanto nosso dataset representa múltiplas categorias de produto
-        (\texttt{category\_id} como feature)
-        no marketplace Amazon global (setembro/2025).
-    Esta diversidade permite generalizar achados além de uma categoria específica,
-        validando se a importância relativa produto vs. marketing
-        varia substancialmente entre tipos de produto.
 \end{enumerate}
-
-\textbf{Síntese do posicionamento:}
-Este trabalho posiciona-se como uma \textbf{análise interpretativa transversal}
-    de importância de features em vendas de e-commerce,
-    combinando rigor metodológico de interpretabilidade ML (SHAP)
-    com framework conceitual produto vs. marketing
-    aplicado a dados reais de marketplace digital contemporâneo.
-Diferentemente de estudos focados em previsão temporal (Li)
-    ou análise estatística tradicional (Zhang),
-    nosso objetivo é \textbf{quantificar e interpretar}
-    quais categorias de features (produto ou marketing)
-    contribuem mais para vendas observadas em produtos de marketplace,
-    fornecendo insights acionáveis para estratégias de produto e marketing digital.
 

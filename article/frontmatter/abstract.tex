@@ -1,68 +1,57 @@
+% o autor deve tomar cuidado para que o resumo (e o abstract)
+%   não ultrapassem 10 linhas cada, sendo que ambos devem estar na primeira
+%   página do artigo.
+
 \begin{resumo} 
 
-A previsão precisa de vendas é fundamental para a gestão eficiente de 
-    e-commerce, impactando diretamente o planejamento de estoque, logística e estratégias comerciais.
-Embora seja conhecido que tanto características do produto quanto estratégias de marketing influenciam vendas,
-    a proporção desses efeitos e como eles se comportam em conjunto em um marketplace de larga escala permanece
-    uma questão empírica relevante.
-Este trabalho apresenta uma abordagem de Aprendizado de Máquina para prever 
-    vendas mensais em e-commerce e investigar o impacto relativo dessas
-    duas categorias de fatores.
-Utilizamos o Amazon Products Sales Dataset, contendo
-    42.675 produtos e
-    17 atributos, incluindo
-    variáveis numéricas, categóricas e
-    temporais.
-Após análise exploratória e pré-processamento 
-criterioso dos dados, avaliamos o desempenho dos algoritmos de regressão
-    [INSERIR ALGORITMOS].
-A estratégia de avaliação empregou
-    [INSERIR METODOLOGIA] % validação cruzada k-fold
-    e métricas como
-    [INSERIR MÉTRICAS]. % RMSE, MAE e R²
-Os resultados demonstram que
-    [INSERIR MELHOR ALGORITMO]. % [ALGORITMO] alcançou o melhor desempenho, com R² de [VALOR] no conjunto de teste.
-A análise de interpretabilidade revelou que
-    [INSERIR MELHOR ANÁLISE]. % estratégias de marketing, especialmente [FEATURE PRINCIPAL], apresentam maior poder preditivo que características intrínsecas do produto, respondendo por aproximadamente [X]\% da importância total das features.
-Tais resultados sugerem que
-    [INSERIR HIGHLIGHT CONCLUSÃO]. % investimentos em visibilidade e promoções têm impacto mais imediato nas vendas do que melhorias na qualidade do produto a curto prazo.
+Em marketplaces digitais, vendedores enfrentam decisão estratégica crítica:
+    priorizar investimentos em características de produto
+    (avaliações, preço)
+    ou estratégias de marketing
+    (patrocínio, cupons, badges)?
+Este trabalho quantifica explicitamente a importância relativa dessas categorias
+    via agregação de SHAP values (SHapley Additive exPlanations)
+    em modelos tree-based (XGBoost, Random Forest, LightGBM).
+Utilizamos o Amazon Products Sales Dataset
+    (42.675 produtos eletrônicos, 9 features, setembro/2023)
+    para prever vendas mensais (\texttt{purchased\_last\_month}).
+Resultados indicam que
+    [INSERIR: produto X\% vs. marketing Y\%],
+    com \texttt{[FEATURE]} apresentando maior contribuição marginal,
+    sugerindo que [INSERIR: insight prático sobre alocação de recursos].
 
 \vspace{0.5em}
 \noindent\textbf{Palavras-chave:}
     Aprendizado~de~Máquina,
-    Previsão~de~Vendas,
     E-commerce,
-    Interpretabilidade.
+    Interpretabilidade,
+    SHAP.
 
 \end{resumo}
 
 \begin{abstract}
 
-Accurate sales forecasting is fundamental for efficient e-commerce management,
-    directly impacting inventory planning, logistics, and business strategies.
-Although it is known that both product characteristics and marketing strategies 
-    influence sales, the magnitude of these effects and how they behave together 
-    in a large-scale marketplace remains a relevant empirical question.
-This work presents a Machine Learning approach to predict monthly e-commerce 
-    sales and investigate the relative impact of these two categories of factors.
-We use the Amazon Products Sales Dataset, containing 42,675 products and 
-    17 attributes, including numerical, categorical, and temporal variables.
-After exploratory analysis and careful data preprocessing, we evaluated the performance of regression algorithms
-    [INSERT ALGORITHMS].
-The evaluation strategy employed
-    [INSERT METHODOLOGY]
-    and metrics such as
-    [INSERT METRICS].
-The results demonstrate that
-    [INSERT BEST ALGORITHM].
-These results suggest that
-    [INSERT HIGHLIGHT CONCLUSION].
+In digital marketplaces, sellers face a critical strategic decision:
+    prioritize investments in product characteristics
+    (reviews, price)
+    or marketing strategies
+    (sponsorship, coupons, badges)?
+This work explicitly quantifies the relative importance of these categories
+    through aggregation of SHAP values (SHapley Additive exPlanations)
+    in tree-based models (XGBoost, Random Forest, LightGBM).
+We use the Amazon Products Sales Dataset
+    (42,675 electronics products, 9 features, September 2023)
+    to predict monthly sales (\texttt{purchased\_last\_month}).
+Results indicate that
+    [INSERT: product X\% vs. marketing Y\%],
+    with \texttt{[FEATURE]} showing the highest marginal contribution,
+    suggesting that [INSERT: practical insight on resource allocation].
 
 \vspace{0.5em}
 \noindent\textbf{Keywords:}
     Machine~Learning,
-    Sales~Forecasting,
     E-commerce,
-    Interpretability.
+    Interpretability,
+    SHAP.
 
 \end{abstract}
