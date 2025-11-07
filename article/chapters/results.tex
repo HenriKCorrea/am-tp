@@ -1,27 +1,21 @@
 \section{Resultados}
 \label{sec:results}
 
-\subsection{Comparação de desempenho dos Modelos}
+\subsection{Desempenho Preditivo dos Modelos}
 
-% Tabela comparativa de todos os modelos
-% Gráficos de desempenho
-% Análise estatística (se aplicável)
+% - Comparação XGBoost, Random Forest, LightGBM
+% - Métricas: MAE, RMSE, R² (validação cruzada + teste)
+% - Seleção do melhor modelo
 
-\subsection{Seleção do Melhor Modelo}
+\subsection{Análise de Importância de Features}
 
-% Justificativa da escolha do melhor modelo
-% Desempenho em treino e teste
-% Análise de overfitting/underfitting
+% 4.2.1. Importância Global (SHAP summary plot)
+% 4.2.2. Distribuição de Impactos (SHAP beeswarm plot)
+% 4.2.3. Análise de Dependência (top 3 features)
 
-\subsection{Interpretação do Modelo}
+\subsection{Quantificação Produto vs. Marketing}
 
-% 6.3.1 Feature Importance
-
-% Ranking dos atributos mais relevantes
-% Visualizações (gráficos de importância)
-
-% 6.3.2 Insights and Knowledge Discovery
-
-% Principais fatores que influenciam vendas
-% Relações inesperadas encontradas
-% Implicações práticas dos achados
+% - Agregação de SHAP values por categoria
+% - Gráfico comparativo (% de importância relativa)
+% - Análise estatística (bootstrapping de intervalos de confiança)
+% - Implicações para alocação de recursos

@@ -8,11 +8,6 @@
 % Tabela com descrição dos atributos
 % Variável alvo (purchased_last_month)
 
-
-%"Atributos textuais (\texttt{product_title}), temporais (\texttt{delivery_date}),
-% e identificadores únicos (URLs) foram excluídos da análise por apresentarem
-% alta cardinalidade ou natureza não preditiva para análise transversal."
-
 \subsection{Análise Exploratória}
 
 % Distribuição da variável alvo
@@ -26,7 +21,6 @@
 
 % 5.3.1 Feature Engineering
 
-% Extração de features temporais (delivery_date, data_collected_at)
 % Tratamento de variáveis categóricas (encoding)
 % Criação de features derivadas (se aplicável)
 
@@ -38,7 +32,10 @@
 
 % 5.3.3 Feature Selection
 
-% Remoção de features irrelevantes (product_image_url, product_page_url)
+% Remoção de features irrelevantes
+%"Atributos textuais (\texttt{product_title}), temporais (\texttt{delivery_date}),
+% e identificadores únicos (URLs) foram excluídos da análise por apresentarem
+% alta cardinalidade ou natureza não preditiva para análise transversal."
 % Análise de importância de features (se aplicável)
 
 \subsection{Desenvolvimento dos Modelos}
@@ -65,3 +62,10 @@
 % Estratégia adotada (Grid Search, Random Search, etc.)
 % Espaço de busca dos hiperparâmetros
 % Validação cruzada para otimização
+
+\subsection{Técnicas de Interpretabilidade}
+
+% - SHAP values: fundamentação teórica (Shapley values)
+% - TreeSHAP: implementação para tree ensembles
+% - Agregação por categoria conceitual (produto vs. marketing)
+
