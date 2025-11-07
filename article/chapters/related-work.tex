@@ -251,6 +251,110 @@ Adicionalmente, o estudo não especifica dataset ou contexto de marketplace,
 
 \subsection{Posicionamento do Presente Trabalho}
 
-% Apresentar tabela comparativa dos trabalhos relacionados
-% Destacar como o presente trabalho se diferencia
+\subsection{Posicionamento do Presente Trabalho}
+
+A análise dos trabalhos relacionados revela uma lacuna importante na literatura:
+    embora existam estudos sobre previsão de vendas em e-commerce utilizando machine learning,
+    há escassez de pesquisas que 
+    \textbf{(1)} quantifiquem explicitamente a importância relativa de características de produto versus estratégias de marketing,
+    \textbf{(2)} utilizem técnicas modernas de interpretabilidade (SHAP values) para análise unificada entre modelos tree-based, e
+    \textbf{(3)} apliquem abordagem cross-sectional em dados de marketplace digital real com features específicas de plataforma.
+
+A Tabela~\ref{tab:related-work-comparison} apresenta uma síntese comparativa dos trabalhos analisados,
+    destacando as principais diferenças metodológicas e de escopo em relação ao presente estudo.
+
+\begin{table}[htbp]
+\centering
+\caption{Comparação entre trabalhos relacionados e o presente estudo}
+\label{tab:related-work-comparison}
+\small
+\begin{tabular}{@{}lcccc@{}}
+    \toprule
+    \textbf{Aspecto} & \textbf{Sharma} & \textbf{Li} & \textbf{Zhang} & \textbf{Este trabalho} \\
+    & \textbf{(2019)} & \textbf{(2022)} & \textbf{(2025)} & \\
+    \midrule
+    Contexto & Amazon India & Rossmann & E-marketplace & Amazon global \\
+    & (livros) & (físico+online) & (genérico) & (multi-categoria) \\
+    \addlinespace
+    Abordagem & Cross-sectional & Temporal & Não especif. & Cross-sectional \\
+    \addlinespace
+    Modelos ML & Reg., DT, ANN & XGB, LGBM, & Regressão & XGB, RF, \\
+    & & CatBoost, RF & múltipla & LGBM \\
+    \addlinespace
+    Interpretab. & Feature imp. & Feature imp. & Coeficientes & \textbf{SHAP values} \\
+    & heterogênea & nativa & regressão & \textbf{(unificado)} \\
+    \addlinespace
+    Análise de & 6 termos de & Não & Moderação & SHAP \\
+    interações & interação & reportado & (regressão) & interaction \\
+    \addlinespace
+    Quantif. & Não & Não & Não & \textbf{Sim} \\
+    produto vs. & (por feature) & (framework & (moderação) & \textbf{(agregado)} \\
+    marketing & & conceitual) & & \\
+    \bottomrule
+\end{tabular}
+\end{table}
+
+\textbf{Contribuições diferenciadoras deste trabalho:}
+
+\begin{enumerate}
+    \item \textbf{Quantificação explícita produto vs. marketing:}
+    Enquanto Sharma et al.~(2019) e Zhang~(2025) categorizam features conceitualmente,
+        nosso trabalho quantifica empiricamente a contribuição relativa agregada de cada categoria
+        via SHAP values somados por grupo de features.
+    Esta abordagem fornece uma medida objetiva (em escala absoluta de impacto em vendas)
+        da importância de investir em características intrínsecas do produto
+        versus estratégias de marketing digital.
+    
+    \item \textbf{Interpretabilidade unificada via SHAP:}
+    Li~(2022) utiliza feature importance nativa de LightGBM/RF,
+        enquanto Sharma et al.~(2019) comparam métricas heterogêneas entre modelos
+        (coeficientes de regressão, predictor importance de DT, pesos de ANN).
+    Nosso trabalho padroniza a análise de importância via SHAP values,
+        garantindo comparabilidade rigorosa entre XGBoost, Random Forest e LightGBM
+        através de uma métrica teoricamente fundamentada (Shapley values da teoria dos jogos).
+    
+    \item \textbf{Features específicas de marketplace digital:}
+    Diferentemente de Li~(2022), que analisa varejo físico/online tradicional,
+        e Zhang~(2025), que utiliza features genéricas (\textit{promotional offers}),
+        nosso dataset captura estratégias específicas de plataformas digitais modernas:
+        \texttt{sponsored} (patrocínio de visibilidade),
+        \texttt{best\_seller\_badge} (gamificação de reputação),
+        \texttt{coupons} (promoções direcionadas) e
+        \texttt{discount\_percentage} (transparência de desconto).
+    Esta granularidade permite análise mais precisa do impacto de táticas de marketing digital
+        vs. atributos de produto em ambientes de e-commerce contemporâneos.
+    
+    \item \textbf{Abordagem cross-sectional para análise de correlações:}
+    Enquanto Li~(2022) foca em previsão temporal (forecast de vendas futuras usando séries históricas),
+        nosso trabalho adota análise cross-sectional para identificar
+        \textbf{quais características presentes no momento atual}
+        correlacionam-se com alto volume de vendas.
+    Esta distinção é metodologicamente relevante:
+        abordagens temporais priorizam padrões de sequência (carryover effects, sazonalidade),
+        enquanto nossa análise identifica fatores de diferenciação entre produtos
+        em um mesmo período temporal, mais adequado para decisões estratégicas de
+        posicionamento de produto e alocação de budget de marketing.
+    
+    \item \textbf{Contexto empírico Amazon global multi-categoria:}
+    Sharma et al.~(2019) limitam-se a livros no marketplace Amazon India,
+        enquanto nosso dataset representa múltiplas categorias de produto
+        (\texttt{category\_id} como feature)
+        no marketplace Amazon global (setembro/2023).
+    Esta diversidade permite generalizar achados além de uma categoria específica,
+        validando se a importância relativa produto vs. marketing
+        varia substancialmente entre tipos de produto.
+\end{enumerate}
+
+\textbf{Síntese do posicionamento:}
+Este trabalho posiciona-se como uma \textbf{análise interpretativa cross-sectional}
+    de importância de features em vendas de e-commerce,
+    combinando rigor metodológico de interpretabilidade ML (SHAP)
+    com framework conceitual produto vs. marketing
+    aplicado a dados reais de marketplace digital contemporâneo.
+Diferentemente de estudos focados em previsão temporal (Li)
+    ou análise estatística tradicional (Zhang),
+    nosso objetivo é \textbf{quantificar e interpretar}
+    quais categorias de features (produto ou marketing)
+    contribuem mais para vendas observadas em produtos de marketplace,
+    fornecendo insights acionáveis para estratégias de produto e marketing digital.
 
