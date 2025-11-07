@@ -3,15 +3,121 @@
 
 \subsection{Contexto e Motivação}
 
+O crescimento exponencial do comércio eletrônico nas últimas décadas transformou radicalmente
+    a dinâmica de vendas no varejo global.
+Marketplaces digitais como Amazon, Mercado Livre e AliExpress concentram milhões de produtos
+    competindo pela atenção de consumidores,
+    onde características de produto
+    (e.g., avaliações, preço, qualidade percebida) e
+    estratégias de marketing
+    (e.g., descontos, cupons, garantias de vendedor)
+    constituem fatores multidimensionais que influenciam decisões de compra~\cite{zhao2020}.
+Entretanto, estudos que integram análise sistemática dessas categorias
+    (produto versus marketing)
+    permanecem escassos~\cite{zhao2020},
+    especialmente em abordagens que quantifiquem sua importância relativa
+    para performance de vendas.
+
+Neste cenário hipercompetitivo, uma questão fundamental emerge para vendedores e plataformas:
+    \textbf{investir em melhorias intrínsecas do produto}
+    (e.g., qualidade refletida em avaliações, ajuste de preço)
+    gera maior retorno em vendas do que
+    \textbf{alocar recursos em visibilidade e promoções}
+    (e.g., patrocínio de posicionamento, cupons de desconto)?
+A efetividade de modelos preditivos de vendas em e-commerce
+    depende fortemente da qualidade e organização das features selecionadas~\cite{diwandari2025}.
+
+Técnicas de interpretabilidade como SHAP (SHapley Additive exPlanations)~\cite{NIPS2017_8a20a862}
+    permitem quantificar a contribuição marginal de cada feature para predições de modelos tree-based,
+    fornecendo medidas rigorosas de importância fundamentadas em teoria dos jogos (Shapley values).
+Diferentemente de feature importance nativa de Random Forests ou XGBoost
+    (baseada em ganho de impureza ou gain),
+    SHAP values oferecem \textbf{interpretabilidade consistente} entre diferentes modelos,
+    permitindo comparação objetiva de importância de features
+    e análise de interações não-lineares entre variáveis~\cite{lundberg2020}.
 
 \subsection{Objetivo do Trabalho}
 
-\textbf{Quais fatores são mais determinantes para prever o volume de vendas mensais de produtos em e-commerce:
-    características intrínsecas do produto (preço, avaliações) ou
-    estratégias de marketing (patrocínio, cupons, selo de best seller)?}
+Este trabalho tem como objetivo central responder à seguinte questão de pesquisa:
+
+\begin{quote}
+\textit{\textbf{Quais fatores são mais determinantes para o volume de vendas mensais de produtos em marketplace digital:
+    características intrínsecas do produto (preço, avaliações, ratings) ou
+    estratégias de marketing (patrocínio, cupons, badges de plataforma)?}}
+\end{quote}
+
+Para investigar esta questão, desenvolvemos uma metodologia de
+    \textbf{análise interpretativa cross-sectional} utilizando o
+    Amazon Products Sales Dataset 
+    (42.675 produtos eletrônicos, 17 features, setembro/2025)~\cite{sherazi2025},
+    aplicando técnicas de interpretabilidade ML baseadas em SHAP values.
+Especificamente, os objetivos são:
+
+\begin{enumerate}
+    \item \textbf{Categorizar features} em dois grupos conceituais:
+    \begin{itemize}
+        \item \textit{Produto}: \texttt{product\_rating}, \texttt{total\_reviews},
+              \texttt{original\_price}
+        \item \textit{Marketing}: \texttt{is\_best\_seller}, \texttt{is\_sponsored}, 
+              \texttt{has\_coupon}, \texttt{sustainability\_tags},
+              \texttt{discounted\_price}, \texttt{discount\_percentage}
+    \end{itemize}
+    
+    \item \textbf{Treinar e avaliar modelos tree-based} (XGBoost, Random Forest, LightGBM)
+        para predição de \texttt{purchased\_last\_month} (vendas mensais),
+        utilizando validação cruzada estratificada e métricas de regressão (MAE, RMSE, $R^2$);
+    
+    \item \textbf{Quantificar importância relativa} de cada categoria
+        (produto vs. marketing)
+        via agregação de SHAP values absolutos médios por grupo de features,
+        fornecendo medida objetiva de contribuição marginal para vendas
+        em escala percentual;
+    
+    \item \textbf{Identificar features individuais mais determinantes}
+        através de análise de SHAP values globais (beeswarm plots),
+        revelando quais atributos específicos dentro de cada categoria
+        têm maior poder preditivo para \texttt{purchased\_last\_month};
+\end{enumerate}
 
 \subsection{Contribuições}
-% O que o trabalho traz de relevante
 
-\subsection{Organização do Artigo}
-% Breve descrição das seções seguintes
+As principais contribuições deste trabalho são:
+
+\begin{enumerate}
+    \item \textbf{Quantificação empírica da dicotomia produto vs. marketing:}
+        Agregação de SHAP values por categoria conceitual para medir objetivamente a
+        importância relativa de características de produto versus estratégias de marketing
+        em vendas de marketplace digital, fornecendo resposta quantitativa
+        (em escala percentual de impacto)
+        ao trade-off de alocação de recursos enfrentado por vendedores.
+    
+    \item \textbf{Metodologia de interpretabilidade unificada:}
+        Aplicação de SHAP values para comparação rigorosa de importância de features
+        entre XGBoost, Random Forest e LightGBM, garantindo interpretabilidade consistente
+        através de métrica fundamentada em teoria dos jogos (Shapley values)
+    
+    \item \textbf{Dataset contemporâneo de eletrônicos Amazon:}
+        Análise de 42.675 produtos eletrônicos com 17 features coletados em setembro/2025,
+        incluindo atributos específicos de marketplace digital moderno
+        (\texttt{is\_sponsored}, \texttt{has\_coupon}, \texttt{sustainability\_tags})
+\end{enumerate}
+
+% \subsection{Organização do Artigo}
+
+% O restante deste artigo está organizado da seguinte forma:
+% A Seção~\ref{sec:related-work} apresenta revisão de trabalhos relacionados
+%     sobre previsão de vendas em e-commerce e análise de importância de features,
+%     posicionando este estudo em relação à literatura existente.
+% A Seção~\ref{sec:methodology} descreve detalhadamente a metodologia empregada,
+%     incluindo análise exploratória dos dados (EDA),
+%     pré-processamento,
+%     estratégia de treinamento e validação de modelos,
+%     e técnicas de interpretabilidade via SHAP.
+% A Seção~\ref{sec:results} apresenta os resultados experimentais,
+%     incluindo desempenho preditivo dos modelos,
+%     análise de importância de features agregada por categoria,
+%     e investigação de interações produto-marketing.
+% A Seção~\ref{sec:discussion} discute criticamente os achados,
+%     limitações do estudo e implicações práticas.
+% Finalmente, a Seção~\ref{sec:conclusion} sumariza as principais conclusões
+%     e sugere direções para trabalhos futuros.
