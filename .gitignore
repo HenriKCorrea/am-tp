@@ -449,6 +449,7 @@ TSWLatexianTemp*
 !texmf/**/*.pdf
 !docs/statement.pdf
 !preprocess/coverpage.pdf
+!docs/Artigo_Previsao_Vendas_Amazon.pdf
 
 # Visual Studio Code
 .vscode/
