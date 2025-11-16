@@ -8,6 +8,153 @@
 % Tabela com descrição dos atributos
 % Variável alvo (purchased_last_month)
 
+O presente estudo utiliza o \textit{Amazon Products Sales Dataset 42K+ Items - 2025}~\cite{sherazi2025},
+    disponível publicamente no Kaggle\footnote{\url{https://www.kaggle.com/datasets/ikramshah512/amazon-products-sales-dataset-42k-items-2025}}.
+Este dataset contém informações detalhadas sobre 42.675 produtos da categoria eletrônicos
+    comercializados na plataforma Amazon, coletados em setembro de 2025.
+
+\subsubsection{Características Gerais}
+
+O dataset original disponibiliza duas versões:
+\textit{cleaned} (dados pré-processados) e
+\textit{uncleaned} (dados brutos).
+Para este trabalho, utilizamos a versão \textbf{cleaned} como referência inicial,
+    realizando posteriormente etapas adicionais de pré-processamento
+    conforme descrito na Seção~\ref{sec:preprocessing}.
+
+O dataset compreende \textbf{42.675 instâncias} com \textbf{17 atributos},
+    categorizados em três grupos funcionais:
+\textit{características de produto} (ratings, reviews, preço),
+\textit{estratégias de marketing} (patrocínio, cupons, selos) e
+\textit{metadados auxiliares} (URLs, datas, imagens).
+
+\subsubsection{Atributos do Dataset}
+
+A Tabela~\ref{tab:dataset-features} descreve os 17 atributos presentes no dataset,
+    indicando tipo de dado, categoria funcional e relevância para o estudo.
+
+\begin{table}[htbp]
+\centering
+\caption{Descrição dos atributos do Amazon Products Sales Dataset}
+\label{tab:dataset-features}
+\small
+\begin{tabular}{@{}llp{4.5cm}l@{}}
+    \toprule
+    \textbf{Atributo} & \textbf{Tipo} & \textbf{Descrição} & \textbf{Categoria} \\
+    \midrule
+    \texttt{product\_title} & Textual & Nome completo do produto & Metadado \\
+    \addlinespace
+    \texttt{product\_rating} & Numérico & Avaliação média (0-5) & Produto \\
+    \addlinespace
+    \texttt{total\_reviews} & Inteiro & Número total de avaliações & Produto \\
+    \addlinespace
+    \texttt{purchased\_last\_month} & Inteiro & \textbf{Unidades vendidas no mês} & \textbf{Produto} \\
+    & & \textbf{anterior (variável alvo)} & \\
+    \addlinespace
+    \texttt{discounted\_price} & Numérico & Preço atual com desconto (\$) & Marketing \\
+    \addlinespace
+    \texttt{original\_price} & Numérico & Preço original sem desconto (\$) & Produto \\
+    \addlinespace
+    \texttt{discount\_percentage} & Numérico & Percentual de desconto aplicado & Marketing \\
+    \addlinespace
+    \texttt{is\_best\_seller} & Booleano & Selo "Best Seller" da Amazon & Marketing \\
+    \addlinespace
+    \texttt{is\_sponsored} & Booleano & Produto patrocinado (paid placement) & Marketing \\
+    \addlinespace
+    \texttt{has\_coupon} & Booleano & Disponibilidade de cupom de desconto & Marketing \\
+    \addlinespace
+    \texttt{buy\_box\_availability} & Booleano & Disponibilidade do botão "Add to Cart" & Marketing \\
+    \addlinespace
+    \texttt{delivery\_date} & Temporal & Data estimada de entrega & Metadado \\
+    \addlinespace
+    \texttt{sustainability\_tags} & Textual & Tags de sustentabilidade (eco-friendly) & Marketing \\
+    \addlinespace
+    \texttt{product\_image\_url} & URL & Link da imagem do produto & Metadado \\
+    \addlinespace
+    \texttt{product\_page\_url} & URL & Link da página oficial do produto & Metadado \\
+    \addlinespace
+    \texttt{data\_collected\_at} & Temporal & Data de coleta dos dados & Metadado \\
+    \addlinespace
+    \texttt{product\_category} & Categórico & Categoria atribuída com base no título & Produto \\
+    \bottomrule
+\end{tabular}
+\end{table}
+
+\subsubsection{Variável Alvo}
+
+A variável alvo deste estudo é \texttt{purchased\_last\_month},
+    que representa o \textbf{número de unidades vendidas no mês anterior à coleta dos dados}.
+Esta variável define uma tarefa de \textbf{regressão},
+    onde o objetivo é prever o volume de vendas mensais
+    com base em características de produto e estratégias de marketing.
+
+A escolha desta variável como target fundamenta-se em três aspectos:
+
+\begin{enumerate}
+    \item \textbf{Alinhamento com objetivo de pesquisa:}
+        Permite investigar correlações entre características observáveis no momento da coleta
+        (ratings, preço, selos) e desempenho de vendas no período imediatamente anterior,
+        viabilizando análise transversal do impacto produto vs. marketing.
+
+    \item \textbf{Relevância prática:}
+        Vendas mensais constituem métrica direta de desempenho comercial em e-commerce,
+        sendo indicador-chave para decisões de estoque, pricing e marketing;
+\end{enumerate}
+
+\subsubsection{Categorização Conceitual das Features}
+
+Para responder à questão de pesquisa central deste trabalho,
+    categorizamos os 17 atributos em três grupos funcionais:
+
+\begin{itemize}
+    \item \textbf{Características de Produto (5 features):}
+        Atributos intrínsecos que refletem qualidade percebida e valor do produto:
+        \texttt{product\_rating},
+        \texttt{total\_reviews},
+        \texttt{original\_price},
+        \texttt{product\_category},
+        \texttt{purchased\_last\_month} (alvo).
+        
+        \item \textbf{Estratégias de Marketing (7 features):}
+        Táticas promocionais e selos de plataforma que aumentam visibilidade:
+        \texttt{discounted\_price},
+        \texttt{discount\_percentage},
+        \texttt{is\_best\_seller},
+        \texttt{is\_sponsored},
+        \texttt{has\_coupon},
+        \texttt{buy\_box\_availability},
+        \texttt{sustainability\_tags}.
+    
+    \item \textbf{Metadados (6 features):}
+        Atributos textuais, temporais ou identificadores únicos
+        sem poder preditivo direto para análise transversal:
+        \texttt{product\_title},
+        \texttt{delivery\_date},
+        \texttt{product\_image\_url},
+        \texttt{product\_page\_url},
+        \texttt{data\_collected\_at}.
+\end{itemize}
+
+\textbf{Nota sobre escopo analítico:}
+Reconhecemos que \texttt{product\_title}, \texttt{delivery\_date} e \texttt{sustainability\_tags}
+    possuem potencial preditivo significativo:
+\texttt{product\_title} contém informações sobre marca, especificações técnicas e linha de produto
+    (extraíveis via NLP);
+\texttt{delivery\_date} permite derivar tempo de entrega
+    (indicador de disponibilidade em estoque e urgência logística);
+\texttt{sustainability\_tags} pode ser codificado como presença/ausência de certificações eco-friendly.
+Entretanto, a exploração dessas features requer técnicas de feature engineering
+    (NLP, engenharia de features temporais)
+    que fogem do escopo central deste trabalho:
+    quantificar a importância relativa de características de produto e estratégias de marketing
+    diretamente observáveis via modelos tree-based.
+Essas features são identificadas como oportunidades para extensões futuras na Seção~\ref{sec:conclusion}.
+
+Esta categorização será utilizada na Seção~\ref{sec:interpretability}
+    para agregação de SHAP values por grupo conceitual,
+    quantificando a importância relativa de produto versus marketing
+    para predição de \texttt{purchased\_last\_month}.
+
 \subsection{Análise Exploratória}
 
 % Distribuição da variável alvo
@@ -18,6 +165,7 @@
 % Principais padrões identificados
 
 \subsection{Pré-processamento dos Dados}
+\label{sec:preprocessing}
 
 % 5.3.1 Feature Engineering
 
