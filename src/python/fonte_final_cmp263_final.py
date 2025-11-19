@@ -235,8 +235,8 @@ if "RandomForest" in models_raw:
 
     # Otimização de hiperparâmetros (reduzida para agilizar)
     param_grid = {
-        'regressor    n_estimators': [50, 100],
-        'regressor    max_depth': [5, 10]
+        'regressor__n_estimators': [50, 100],
+        'regressor__max_depth': [5, 10]
     }
 
     grid = GridSearchCV(rf_pipeline, param_grid, cv=3, scoring='r2', n_jobs=-1)
